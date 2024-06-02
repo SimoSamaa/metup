@@ -1,0 +1,25 @@
+{
+  "name": "metup-server",
+  "version": "1.0.0",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "tsc --build",
+    "start": "node --env-file=.env ./dist/app.js",
+    "dev": "nodemon --exec node -r ts-node/register --env-file=.env ./src/app.ts"
+  },
+  "devDependencies": {
+    "@types/express": "^4.17.21",
+    "@types/mongoose": "^5.11.97",
+    "@types/node": "^20.12.12",
+    "@types/validator": "^13.11.10",
+    "nodemon": "^3.1.0",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.4.5"
+  },
+  "dependencies": {
+    "express": "^4.19.2",
+    "mongoose": "^8.4.0",
+    "validator": "^13.12.0"
+  }
+}

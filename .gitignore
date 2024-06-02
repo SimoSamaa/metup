@@ -1,0 +1,27 @@
+client/.DS_Store
+client/node_modules
+client/dist
+
+# Log files
+client/npm-debug.log*
+client/yarn-debug.log*
+client/yarn-error.log*
+client/pnpm-debug.log*
+client/.vercel
+
+# Editor directories and files
+client/.idea
+client/.vscode
+client/*.suo
+client/*.ntvs*
+client/*.njsproj
+client/*.sln
+client/*.sw?
+
+# Backend
+server/node_modules
+server/dist
+server/.env
+
+# main dir
+/node_modules

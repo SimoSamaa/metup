@@ -1,0 +1,7 @@
+@use './colors' as *;
+
+@mixin colorsApp() {
+  @each $color, $value in $colors {
+    --clr-#{$color}: #{$value};
+  }
+}
