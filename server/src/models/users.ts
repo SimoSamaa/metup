@@ -1,5 +1,5 @@
 import { Schema, model } from "mongoose";
-import { IUser, Gender, Relationship } from "./@types/userType";
+import { IUser, Gender, Relationship } from "./types/userType";
 
 const ObjectId = Schema.Types.ObjectId;
 const mess = 'is required';

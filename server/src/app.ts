@@ -1,14 +1,13 @@
 import express, { Request, Response, NextFunction } from "express";
 import mongoose from "mongoose";
-import { readdirSync } from 'fs';
+import bodyParser from "body-parser";
+import { readdirSync, readFileSync } from 'fs';
 import { join } from 'path';
 
 const app = express();
 const port = (process.env.PORT || 3000).toString();
-const MONGO_DB =
-  `mongodb+srv://${process.env.MONGO_DB_USER}:${process.env.MONGO_DB_PASS}@cluster0.6iew5xq.mongodb.net/${process.env.MONGO_DB_NAME}`;
 
-// ?retryWrites=true&w=majority&appName=Cluster0
+app.use(bodyParser.json());
 
 app.use((_, res: Response, next: NextFunction) => {
   res.setHeader('Access-Control-Allow-Origin', '*');
@@ -30,16 +29,17 @@ interface ErrorStatus {
 app.use((error: ErrorStatus, _: Request, res: Response, next: NextFunction): void => {
   console.log(error);
   const status = error.statusCode || 500;
-  const message = error.message;
+  const message = error.message || 'An unknown error occurred!';
 
-  res.status(status).json({ message: message });
+  res.status(status).json({ message });
   next();
 });
 
-mongoose.connect(MONGO_DB)
+mongoose.connect(process.env.MONGO_DB as string)
   .then(() => {
     app.listen(port, () => {
-      console.log(`Server is running on port ${port}`);
+      process.stdout
+        .write(`Server is running in -> \x1b[34m${process.env.LOCALHOST}:${port}\x1b[0m\n`);
       console.log('routers files:', readdirSync(pathToRouters));
     });
   })
