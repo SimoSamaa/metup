@@ -48,4 +48,20 @@ router.post('/register',
   userController.register
 );
 
+router.post('/activate', userController.activateAccount);
+
+router.post('/login',
+  [
+    body('email')
+      .isEmail()
+      .withMessage('Please enter a valid email.')
+      .normalizeEmail(),
+
+    body('password')
+      .isString()
+      .withMessage('Password must be a string.')
+      .isLength({ min: 8 })
+  ],
+  userController.login);
+
 export default router;

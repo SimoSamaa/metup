@@ -1,7 +1,7 @@
 import express, { Request, Response, NextFunction } from "express";
 import mongoose from "mongoose";
 import bodyParser from "body-parser";
-import { readdirSync, readFileSync } from 'fs';
+import { readdirSync } from 'fs';
 import { join } from 'path';
 
 const app = express();

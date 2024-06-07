@@ -1,5 +1,6 @@
 import { validationResult } from 'express-validator';
 import { Request, NextFunction } from 'express';
+import { IUser } from '../models/users';
 
 
 class HandledError extends Error {
@@ -10,12 +11,18 @@ class HandledError extends Error {
     this.statusCode = statusCode;
   }
 
-
   static validation(req: Request, statusCode: number) {
     const errors = validationResult(req);
 
     if (!errors.isEmpty()) {
       const error = new HandledError(errors.array()[0].msg, statusCode);
+      throw error;
+    }
+  }
+
+  static notFound(model: IUser | null, mess: string) {
+    if (!model) {
+      const error = new HandledError(mess, 404);
       throw error;
     }
   }

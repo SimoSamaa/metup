@@ -1,6 +1,5 @@
 import nodemailer from 'nodemailer';
 import { google } from 'googleapis';
-import { log } from 'console';
 
 const OAuth2 = google.auth.OAuth2;
 const OAUTH_LINK = 'https://developers.google.com/oauthplayground';

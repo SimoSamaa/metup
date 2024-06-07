@@ -1,5 +1,5 @@
 import { Schema, model } from "mongoose";
-import { IUser, Gender, Relationship } from "./types/userType";
+import { IUser, Gender, Relationship } from "./@types/userType";
 
 const ObjectId = Schema.Types.ObjectId;
 const mess = 'is required';
@@ -131,4 +131,7 @@ const userSchema = new Schema<IUser>({
   ],
 }, { timestamps: true });
 
-export default model<IUser>("User", userSchema);
+const User = model<IUser>("User", userSchema);
+
+export default User;
+export { User, IUser };
