@@ -22,6 +22,9 @@ client/*.sw?
 server/node_modules
 server/dist
 server/.env
+server/.nyc_output
+server/tests
 
 # main dir
 /node_modules
+.vscode

@@ -5,3 +5,23 @@
     --clr-#{$color}: #{$value};
   }
 }
+
+@mixin breakpoint($size-screen) {
+  @if($size-screen =='sm') {
+    @media (max-width: 650px) {
+      @content;
+    }
+  }
+
+  @else if ($size-screen =='md') {
+    @media (max-width: 950px) {
+      @content;
+    }
+  }
+
+  @else if ($size-screen =='lg') {
+    @media (max-width: 1285px) {
+      @content;
+    }
+  }
+}

@@ -2,16 +2,16 @@ import { Request, Response, NextFunction } from 'express';
 import { hash, compare } from 'bcryptjs';
 import { verify, Secret } from 'jsonwebtoken';
 import { User, IUser } from '../models/users';
-import HandledError from '../util/handledError';
-import generateToken from '../util/jwt';
-import sendEmail from '../util/mailer';
+import HandledError from '../utils/handledError';
+import generateToken from '../utils/jwt';
+import sendEmail from '../utils/mailer';
 import verificationTemp from '../emails/verification';
 
 // REGISTER USER (SIGNUP)
 export const register = async (req: Request, res: Response, next: NextFunction) => {
 
   try {
-    // VALIAIDATION
+    // VALIDATION
     HandledError.validation(req, 422);
 
     const dataRegister: IUser = req.body;
@@ -37,12 +37,12 @@ export const register = async (req: Request, res: Response, next: NextFunction) 
     // USER ID
     const id = String(user.toObject()._id).toString();
 
-    // SEND EMAIL VIRIFICATION
+    // SEND EMAIL VALIDATION
     const emailToken = generateToken({ id }, '1h');
     const url = `${process.env.CLIENT_URL}/activate/${emailToken}`;
     const emailVerification = verificationTemp(user.firstName, url);
 
-    sendEmail(user.email, 'METUP Virefication Email', emailVerification);
+    sendEmail(user.email, 'METUP Verification Email', emailVerification);
 
     // CREATE GENERATE USER TOKEN
     const token = generateToken({ id }, '1h');
@@ -59,8 +59,10 @@ export const register = async (req: Request, res: Response, next: NextFunction) 
       message: 'User created successfully, please check your email to verify your account.'
     });
 
+    return;
   } catch (err: unknown | Error) {
-    HandledError.ctachError(err, next);
+    HandledError.serverFail(err, next);
+    return err;
   }
 };
 
@@ -83,14 +85,17 @@ export const activateAccount = async (req: Request, res: Response, next: NextFun
       res.status(200).json({ message: 'Account activated successfully.' });
     }
 
+    return;
+
   } catch (err: unknown | Error) {
-    HandledError.ctachError(err, next);
+    HandledError.serverFail(err, next);
+    return err;
   }
 };
 
 export const login = async (req: Request, res: Response, next: NextFunction) => {
   try {
-    // VALIAIDATION
+    // VALIDATION
     HandledError.validation(req, 422);
 
     const { email, password } = req.body as { email: string; password: string; };
@@ -121,8 +126,10 @@ export const login = async (req: Request, res: Response, next: NextFunction) => 
       verified: user!.verified,
       message: 'User logged successfully.'
     });
+    return;
 
   } catch (err: unknown | Error) {
-    HandledError.ctachError(err, next);
+    HandledError.serverFail(err, next);
+    return err;
   }
 };

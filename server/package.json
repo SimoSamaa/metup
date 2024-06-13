@@ -3,20 +3,27 @@
   "version": "1.0.0",
   "main": "app.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test": "mocha --require ts-node/register tests/**/*.ts",
+    "coverage": "nyc npm test",
     "build": "tsc --build",
     "start": "node --env-file=.env ./dist/app.js",
     "dev": "nodemon --exec node -r ts-node/register --env-file=.env ./src/app.ts"
   },
   "devDependencies": {
     "@types/bcryptjs": "^2.4.6",
+    "@types/chai": "^4.3.16",
     "@types/express": "^4.17.21",
     "@types/jsonwebtoken": "^9.0.6",
+    "@types/mocha": "^10.0.6",
     "@types/mongoose": "^5.11.97",
     "@types/node": "^20.12.12",
     "@types/nodemailer": "^6.4.15",
+    "@types/sinon": "^17.0.3",
     "@types/validator": "^13.11.10",
+    "chai": "^4.4.1",
+    "mocha": "^10.4.0",
     "nodemon": "^3.1.0",
+    "sinon": "^18.0.0",
     "ts-node": "^10.9.2",
     "typescript": "^5.4.5"
   },
@@ -28,6 +35,7 @@
     "jsonwebtoken": "^9.0.2",
     "mongoose": "^8.4.0",
     "nodemailer": "^6.9.13",
+    "nyc": "^17.0.0",
     "validator": "^13.12.0"
   }
 }

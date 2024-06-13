@@ -24,7 +24,7 @@ const verificationEmailTem = (name: string, url: string) => {
       href="${url}"
       style="background-color: #1877F2; color: #fff; border: none; padding: 1rem ; border-radius: .3rem; font-weight: bold; cursor: pointer; display: block; text-decoration: none;"
     >
-      Counfirm your account
+      Confirm your account
     </a>
     <br />
     <p style="color: gray; margin: 0;"><strong>Note:</strong> this confirmation account link will be expired in 1h</p>

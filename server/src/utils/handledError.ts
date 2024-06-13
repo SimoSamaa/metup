@@ -4,7 +4,7 @@ import { IUser } from '../models/users';
 
 
 class HandledError extends Error {
-  statusCode: number;
+  private statusCode: number;
 
   constructor(message: string, statusCode: number) {
     super(message);
@@ -27,7 +27,7 @@ class HandledError extends Error {
     }
   }
 
-  static ctachError(err: unknown | Error, next: NextFunction) {
+  static serverFail(err: unknown | Error, next: NextFunction) {
     type errObj = { statusCode: number; message: string; };
     const error = err as errObj;
 
