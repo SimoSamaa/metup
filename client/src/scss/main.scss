@@ -1,2 +1,77 @@
 @use './helpers/reset' as *;
-// @use './helpers/mixins' as *;
+@use './helpers/mixins' as *;
+
+// AUTH DATA FIELD
+.data-field {
+  @apply grid gap-4 flex-1;
+
+  .input-container {
+    @apply relative rounded-md backdrop-hue-rotate-[45deg];
+
+    svg {
+      @apply absolute top-1/2 right-4 -translate-y-1/2 text-red-500;
+    }
+
+    // MAIN INPUT STYLE
+    input {
+      @apply h-[48px] border-third border-2 rounded-md px-4 w-full duration-300 ease-out transition-all bg-transparent;
+
+      &:focus {
+        @apply outline-none ring-offset-0 ring-blue-300 ring-4 border-blue-500 border-2;
+      }
+
+      &::-webkit-calendar-picker-indicator {
+        @apply z-20 size-5 opacity-0 cursor-pointer;
+      }
+
+      // INPUT ERROR
+      &.input-error {
+        @apply border-red-500 bg-red-100;
+
+        &:focus {
+          @apply ring-red-300;
+        }
+
+        &::placeholder {
+          @apply text-red-500;
+        }
+      }
+    }
+  }
+
+  // ERROR MESSAGE
+  .error-message {
+    @apply absolute text-sm bg-red-500 text-w1 px-4 py-[0.87rem] rounded-md w-[250px] -left-[270px];
+
+    &.last-name {
+      @apply top-4 left-1/2 -translate-x-1/2 w-[calc(100%-2rem)];
+    }
+
+    $arrowDirection: (
+      arrow-top: top,
+      arrow-bottom: bottom,
+      last-name: bottom
+    );
+
+  @each $class, $direction in $arrowDirection {
+    @include arrowControl($class, $direction)
+  }
+
+  @include breakpoint('md') {
+    @apply relative w-full left-0;
+
+    &.last-name {
+      @apply inset-0 translate-x-0 w-auto;
+    }
+  }
+}
+}
+
+// BUTTON
+.custom-btn {
+  @apply h-[48px] text-white rounded-md w-full duration-300 ease-out transition-colors font-semibold;
+
+  &:active {
+    @apply scale-95;
+  }
+}

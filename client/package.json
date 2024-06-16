@@ -12,6 +12,7 @@
     "lint": "eslint . --ext .vue,.js,.jsx,.cjs,.mjs,.ts,.tsx,.cts,.mts --fix --ignore-path .gitignore"
   },
   "dependencies": {
+    "lucide-vue-next": "^0.395.0",
     "pinia": "^2.1.7",
     "three": "^0.165.0",
     "vue": "^3.4.21",

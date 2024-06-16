@@ -6,6 +6,30 @@
   }
 }
 
+// 
+@mixin arrowControl($class, $direction) {
+  &.#{$class}::before {
+    @apply content-[''] absolute border-[10px] border-transparent border-l-red-500 -right-[1.2rem] top-1/2 -translate-y-1/2;
+
+    @if($class =='last-name') {
+      @apply border-t-red-500 right-3 top-[48px] transform-none size-[10px] border-[10px] border-transparent;
+    }
+
+    @include breakpoint('md') {
+      @apply transform-none size-[10px] border-[10px] border-transparent;
+
+      @if($direction =='bottom') {
+        @apply border-t-red-500 left-3 top-[47px];
+      }
+
+      @else if($direction =='top') {
+        @apply border-b-red-500 left-3 -top-[18px];
+      }
+    }
+  }
+}
+
+// MEDIA QUERIES
 @mixin breakpoint($size-screen) {
   @if($size-screen =='sm') {
     @media (max-width: 650px) {

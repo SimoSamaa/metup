@@ -59,8 +59,8 @@ onMounted(() => {
 
   const updateSize = () => {
     if (window.innerWidth <= 950) {
-      aspect.width = 200;
-      aspect.height = 200;
+      aspect.width = 150;
+      aspect.height = 150;
     } else {
       aspect.width = innerWidth / 2;
       aspect.height = innerHeight - 50;

@@ -7,7 +7,8 @@ export default {
   theme: {
     extend: {
       colors: {
-        "secondary": 'var(--clr-bg-secondary)',
+        "w1": "var(--clr-bg-primary)",
+        "w2": 'var(--clr-bg-secondary)',
         "blue2": 'var(--clr-blue2)',
         "third": 'var(--clr-bg-third)',
       }
@@ -29,5 +30,4 @@ export default {
       // },
     ],
   },
-}
-
+};
