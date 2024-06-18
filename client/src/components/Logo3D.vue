@@ -20,15 +20,15 @@ const path = computed<Function>(() => {
 onMounted(() => {
   const scene = new THREE.Scene();
 
-  const ambientLight = new THREE.AmbientLight(0xffffff, 1.1);
+  const ambientLight = new THREE.AmbientLight(0xffffff, 2.5);
   scene.add(ambientLight);
 
-  const directionalLight = new THREE.DirectionalLight(0xffffff, 1.8);
+  const directionalLight = new THREE.DirectionalLight(0xffffff, 5);
   scene.add(directionalLight);
   directionalLight.position.set(0, 2, 0);
 
-  const pointLight = new THREE.PointLight(0xffffff, 1.8);
-  pointLight.position.set(0, 2, 0);
+  const pointLight = new THREE.PointLight(0xffffff, 5);
+  pointLight.position.set(-2.47, 0.58, 0);
   scene.add(pointLight);
 
   const fbxLoader = new FBXLoader();

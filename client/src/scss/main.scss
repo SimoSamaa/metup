@@ -44,7 +44,7 @@
     @apply absolute text-sm bg-red-500 text-w1 px-4 py-[0.87rem] rounded-md w-[250px] -left-[270px];
 
     &.last-name {
-      @apply top-4 left-1/2 -translate-x-1/2 w-[calc(100%-2rem)];
+      @apply top-[17px] left-1/2 -translate-x-1/2 w-[calc(100%-2rem)];
     }
 
     $arrowDirection: (

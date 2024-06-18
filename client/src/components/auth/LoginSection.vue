@@ -15,6 +15,7 @@
           placeholder="Email address"
           v-model.trim="loginDataForm.email.value"
           :class="{ 'input-error': !loginDataForm.email.isValidate }"
+          @blur="clearValidity('email')"
         >
         <Info v-if="!loginDataForm.email.isValidate" />
       </div>
@@ -27,6 +28,7 @@
           placeholder="Password"
           v-model.trim="loginDataForm.password.value"
           :class="{ 'input-error': !loginDataForm.password.isValidate }"
+          @blur="clearValidity('password')"
         >
         <Info v-if="!loginDataForm.password.isValidate" />
       </div>
@@ -59,6 +61,11 @@ const loginDataForm = reactive({
 });
 
 const validateForm = ref(true);
+
+const clearValidity = (input: string) => {
+  type ElementKey = { [key: string]: { isValidate: boolean; }; };
+  (loginDataForm as ElementKey)[input].isValidate = true;
+};
 
 const checkValidationInput = () => {
   const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
