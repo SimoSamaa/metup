@@ -21,6 +21,7 @@ interface IUser extends Document {
   bYear: number;
   bMonth: number;
   bDay: number;
+  message?: string;
   verified: boolean;
   friends: any;
   following: any;

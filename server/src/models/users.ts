@@ -63,6 +63,10 @@ const userSchema = new Schema<IUser>({
     required: true,
     trim: true,
   },
+  message: {
+    type: String,
+    default: "User created successfully",
+  },
   verified: {
     type: Boolean,
     default: false,

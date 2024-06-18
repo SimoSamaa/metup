@@ -56,9 +56,7 @@ export const register = async (req: Request, res: Response, next: NextFunction) 
       firstName: user.firstName,
       lastName: user.lastName,
       verified: user.verified,
-      message: 'User created successfully, please check your email to verify your account.'
     });
-
     return;
   } catch (err: unknown | Error) {
     HandledError.serverFail(err, next);
