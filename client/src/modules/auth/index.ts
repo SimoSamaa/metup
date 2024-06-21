@@ -9,6 +9,6 @@ const useAuthStore = defineStore('auth', {
   }),
   actions: authActions,
   getters: authGetters,
-});
+}) as any;
 
 export default useAuthStore;

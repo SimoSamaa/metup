@@ -10,7 +10,7 @@
           <div
             class="error-message arrow-bottom"
             v-if="!signupDataForm.firstName.isValidate"
-          >first name required</div>
+          >First name required</div>
           <div class="input-container">
             <input
               type="text"
@@ -27,7 +27,7 @@
           <div
             class="error-message arrow-bottom last-name"
             v-if="!signupDataForm.lastName.isValidate"
-          >last name required</div>
+          >Last name required</div>
           <div class="input-container">
             <input
               type="text"
@@ -45,7 +45,7 @@
         <div
           class="error-message arrow-bottom"
           v-if="!signupDataForm.email.isValidate"
-        >please enter a valid email</div>
+        >{{ emailMessErr }}</div>
         <div class="input-container">
           <input
             type="text"
@@ -72,7 +72,7 @@
         <div
           class="error-message arrow-top"
           v-if="!signupDataForm.password.isValidate"
-        >password required</div>
+        >Password required</div>
       </div>
       <!-- DATE -->
       <div class="data-field">
@@ -89,6 +89,10 @@
             :class="{ 'error': !signupDataForm.date.isValidate }"
           />
         </div>
+        <div
+          class="error-message arrow-top"
+          v-if="!signupDataForm.date.isValidate"
+        >{{ dateMessErr }}</div>
       </div>
       <!-- GENDER -->
       <div class="gender flex gap-4">
@@ -126,13 +130,26 @@
         </label>
       </div>
     </div>
-    <button class="custom-btn bg-green-500 hover:bg-green-700">Sign up</button>
+    <div class="px-2 pt-1">
+      <base-button
+        color="bg-green-500"
+        :loading="isLoading"
+      >Log in</base-button>
+      <p
+        v-if="serverMess"
+        class="text-red-500 font-semibold mt-2"
+      >{{ serverMess }}</p>
+    </div>
   </form>
 </template>
 
 <script setup lang="ts">
 import { ref, reactive, onMounted } from 'vue';
+import useAuthStore from '@/modules/auth/index';
 import { Info, CalendarDays } from 'lucide-vue-next';
+
+const authStore = useAuthStore();
+const emit = defineEmits(['set-signup-success']);
 
 const signupDataForm = reactive({
   firstName: {
@@ -162,6 +179,10 @@ const signupDataForm = reactive({
 });
 
 const validateForm = ref(true);
+const isLoading = ref(false);
+const dateMessErr = ref('');
+const emailMessErr = ref('');
+const serverMess = ref('');
 
 const clearValidity = (input: string) => {
   type ElementKey = { [key: string]: { isValidate: boolean; }; };
@@ -172,6 +193,7 @@ const checkValidationInput = () => {
   const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
   validateForm.value = true;
 
+  // FIRST NAME VALIDATION
   if (!signupDataForm.firstName.value) {
     signupDataForm.firstName.isValidate = false;
     validateForm.value = false;
@@ -179,6 +201,7 @@ const checkValidationInput = () => {
     signupDataForm.firstName.isValidate = true;
   }
 
+  // LAST NAME VALIDATION;
   if (!signupDataForm.lastName.value) {
     signupDataForm.lastName.isValidate = false;
     validateForm.value = false;
@@ -186,27 +209,49 @@ const checkValidationInput = () => {
     signupDataForm.lastName.isValidate = true;
   }
 
-  if (!emailRegex.test(signupDataForm.email.value)) {
+  // EMAIL VALIDATION
+  if (!signupDataForm.email.value) {
     signupDataForm.email.isValidate = false;
     validateForm.value = false;
+    emailMessErr.value = 'Email required';
+  } else if (!emailRegex.test(signupDataForm.email.value)) {
+    signupDataForm.email.isValidate = false;
+    validateForm.value = false;
+    emailMessErr.value = 'Please enter a valid email';
   } else {
     signupDataForm.email.isValidate = true;
   }
 
-  if (!signupDataForm.password.value || signupDataForm.password.value.length < 6) {
+  // PASSWORD VALIDATION
+  if (!signupDataForm.password.value) {
     signupDataForm.password.isValidate = false;
     validateForm.value = false;
   } else {
     signupDataForm.password.isValidate = true;
   }
 
+  const bYear = Number(signupDataForm.date.value.split('-')[0]);
+  const bMonth = Number(signupDataForm.date.value.split('-')[1]);
+  const bDay = Number(signupDataForm.date.value.split('-')[2]);
+  const currentDate = Date.now();
+  const pickedDate = +new Date(bYear, bMonth - 1, bDay);
+  const dateAllow = +new Date(1970 + 14, 0, 1); // 14 years old
+
+  // DATE OF BIRTH VALIDATION
   if (!signupDataForm.date.value) {
     signupDataForm.date.isValidate = false;
     validateForm.value = false;
-  } else {
+    dateMessErr.value = 'Date required';
+  } else if (currentDate - pickedDate < dateAllow) {
+    dateMessErr.value = 'You must be at least 14 years old';
+    signupDataForm.date.isValidate = false;
+    validateForm.value = false;
+  }
+  else {
     signupDataForm.date.isValidate = true;
   }
 
+  // GENDER VALIDATION
   if (!signupDataForm.gender.value) {
     signupDataForm.gender.isValidate = false;
     validateForm.value = false;
@@ -221,16 +266,23 @@ const submitSignupForm = async () => {
   validateForm.value = true;
 
   try {
-    console.log({
+    isLoading.value = true;
+    await authStore.register({
       firstName: signupDataForm.firstName.value,
       lastName: signupDataForm.lastName.value,
       email: signupDataForm.email.value,
       password: signupDataForm.password.value,
       date: signupDataForm.date.value,
       gender: signupDataForm.gender.value,
-    },);
+    });
+
+    emit('set-signup-success', 'login'); // if signup success, switch to login
   } catch (err) {
-    console.log((err as { message: string; }));
+    console.error('error from register', (err));
+    const errMess = (err as { message: string; }).message;
+    serverMess.value = errMess;
+  } finally {
+    isLoading.value = false;
   }
 };
 

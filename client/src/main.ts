@@ -9,6 +9,12 @@ const app = createApp(App);
 
 const store = createPinia();
 
+import BaseAlert from '@/components/UI/BaseAlert.vue';
+import BaseButton from '@/components/UI/BaseButton.vue';
+
+app.component('base-alert', BaseAlert);
+app.component('base-button', BaseButton);
+
 app
   .use(store)
   .use(router);

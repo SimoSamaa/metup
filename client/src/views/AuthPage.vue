@@ -1,4 +1,11 @@
 <template>
+  <!-- ALERT -->
+  <base-alert
+    :show="!!showAlert"
+    message='Register success! Please activate your email to start'
+    type="alert-info"
+  ></base-alert>
+
   <section class="flex min-h-screen items-center px-4 relative z-10 isolate">
     <Logo3D />
     <div class="bg-white bg-opacity-50 p-4 flex-1 shadow-sm rounded-md max-w-lg mx-auto backdrop-hue-rotate-[45deg]">
@@ -18,7 +25,10 @@
           :class="act === 'signup' ? 'text-w1' : 'text-[#9FA6B2]'"
         >Signup</button>
       </div>
-      <component :is="currentAuthSec" />
+      <component
+        @set-signup-success="signupSuccess"
+        :is="currentAuthSec"
+      />
     </div>
     <div class="fixed bottom-8 left-1/2 -translate-x-1/2 text-blue2 font-bold text-3xl metup">METUP</div>
     <div class="blob blob-1"></div>
@@ -33,6 +43,7 @@ import loginSection from '@/components/auth/LoginSection.vue';
 import SignupSection from '@/components/auth/SignupSection.vue';
 
 const activeAuth = ref<null | HTMLElement>(null);
+const showAlert = ref('');
 const act = ref('login');
 
 const currentAuthSec = computed(() => act.value === 'login' ? loginSection : SignupSection);
@@ -45,6 +56,14 @@ const activeAuthSec = (e: Event, authMode: string) => {
     const ind = Number(e.target.id);
     active.style.left = `${ind * 100 / 2}%`;
   }
+};
+const signupSuccess = (authMode: string | any) => {
+  act.value = authMode;
+  showAlert.value = authMode;
+  const active = (activeAuth.value as HTMLElement);
+  active.style.left = '0';
+
+  setTimeout(() => showAlert.value = '', 5000);
 };
 </script>
 
@@ -78,7 +97,7 @@ section {
 
   @keyframes rotate {
 
-    to {
+    0% {
       transform: translate(-50%, -50%) rotate(0);
     }
 
@@ -90,7 +109,7 @@ section {
       transform: translate(-50%, -50%) rotate(0) scaleX(1.5);
     }
 
-    from {
+    100% {
       transform: translate(-50%, -50%) rotate(360deg);
     }
   }

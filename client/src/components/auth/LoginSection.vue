@@ -8,7 +8,7 @@
       <div
         class="error-message arrow-bottom"
         v-if="!loginDataForm.email.isValidate"
-      >please enter a valid email</div>
+      >{{ emailErrMess }}</div>
       <div class="input-container">
         <input
           type="text"
@@ -35,19 +35,27 @@
       <div
         class="error-message arrow-top"
         v-if="!loginDataForm.password.isValidate"
-      >password required</div>
+      >{{ passwordErrMess }}</div>
     </div>
-    <button
-      type="submit"
-      class="custom-btn bg-blue2 hover:bg-blue-700"
-    >Log in</button>
+    <div>
+      <base-button
+        color="bg-blue2"
+        :loading="isLoading"
+      >Log in</base-button>
+      <p class="text-red-500 font-semibold mt-2">{{ serverMess }}</p>
+    </div>
     <p class="text-center text-blue2">Forgotten password</p>
   </form>
 </template>
 
 <script lang="ts" setup>
 import { ref, reactive } from 'vue';
+import { useRouter } from 'vue-router';
+import useAuthStore from '@/modules/auth';
 import { Info } from 'lucide-vue-next';
+
+const authStore = useAuthStore();
+const router = useRouter();
 
 const loginDataForm = reactive({
   email: {
@@ -61,6 +69,10 @@ const loginDataForm = reactive({
 });
 
 const validateForm = ref(true);
+const isLoading = ref(false);
+const serverMess = ref('');
+const emailErrMess = ref('');
+const passwordErrMess = ref('');
 
 const clearValidity = (input: string) => {
   type ElementKey = { [key: string]: { isValidate: boolean; }; };
@@ -71,17 +83,28 @@ const checkValidationInput = () => {
   const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
   validateForm.value = true;
 
-  if (!emailRegex.test(loginDataForm.email.value)) {
+  if (!loginDataForm.email.value) {
     loginDataForm.email.isValidate = false;
     validateForm.value = false;
+    emailErrMess.value = 'Email required';
+  } else if (!emailRegex.test(loginDataForm.email.value)) {
+    loginDataForm.email.isValidate = false;
+    validateForm.value = false;
+    emailErrMess.value = 'please enter a valid email';
   } else {
     loginDataForm.email.isValidate = true;
   }
 
-  if (!loginDataForm.password.value || loginDataForm.password.value.length < 6) {
+  if (!loginDataForm.password.value) {
     loginDataForm.password.isValidate = false;
     validateForm.value = false;
-  } else {
+    passwordErrMess.value = 'password required';
+  } else if (loginDataForm.password.value.length < 8) {
+    passwordErrMess.value = 'password must be at least 8 characters';
+    loginDataForm.password.isValidate = false;
+    validateForm.value = false;
+  }
+  else {
     loginDataForm.password.isValidate = true;
   }
 };
@@ -92,16 +115,21 @@ const submitLoginForm = async () => {
   validateForm.value = true;
 
   try {
-    console.log({
+    isLoading.value = true;
+
+    await authStore.login({
       email: loginDataForm.email.value,
       password: loginDataForm.password.value
-    },);
+    });
+
+    router.push({ name: 'home' });
+
   } catch (err) {
-    console.log((err as { message: string; }));
+    console.error('error from login', (err));
+    const errMess = (err as { message: string; }).message;
+    serverMess.value = errMess;
+  } finally {
+    isLoading.value = false;
   }
 };
 </script>
-
-<style lang="scss" scoped>
-@import '@/scss/helpers/mixins';
-</style>

@@ -6,7 +6,6 @@
   }
 }
 
-// 
 @mixin arrowControl($class, $direction) {
   &.#{$class}::before {
     @apply content-[''] absolute border-[10px] border-transparent border-l-red-500 -right-[1.2rem] top-1/2 -translate-y-1/2;
@@ -46,6 +45,44 @@
   @else if ($size-screen =='lg') {
     @media (max-width: 1285px) {
       @content;
+    }
+  }
+}
+
+@mixin setAnimation($name, $from-properties, $to-properties, $use-opacity) {
+  .#{$name}-enter-active {
+    animation: #{$name} 300ms ease;
+  }
+
+  .#{$name}-leave-active {
+    animation: #{$name} 300ms ease reverse;
+  }
+
+  .#{$name}-move {
+    transition: all 300ms ease;
+  }
+
+  @keyframes #{$name} {
+    from {
+      @if ($use-opacity =='opacity') {
+        opacity: 0;
+      }
+
+      @each $property, $value in $from-properties {
+        opacity: 0;
+        #{$property}: $value;
+      }
+    }
+
+    to {
+      @if ($use-opacity =='opacity') {
+        opacity: 1;
+      }
+
+      @each $property, $value in $to-properties {
+        opacity: 1;
+        #{$property}: $value;
+      }
     }
   }
 }
