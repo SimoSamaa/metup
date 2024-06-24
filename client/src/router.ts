@@ -8,14 +8,24 @@ const router = createRouter({
       redirect: '/auth'
     },
     {
+      path: '/auth',
+      name: 'auth',
+      component: () => import('@/views/AuthPage.vue')
+    },
+    {
       path: '/home',
       name: 'home',
       component: () => import('@/views/HomePage.vue')
     },
     {
-      path: '/auth',
-      name: 'auth',
-      component: () => import('@/views/AuthPage.vue')
+      path: '/friends',
+      name: 'friends',
+      component: () => import('@/views/FriendsPage.vue')
+    },
+    {
+      path: '/watch',
+      name: 'watch',
+      component: () => import('@/views/WatchPage.vue')
     }
   ]
 });

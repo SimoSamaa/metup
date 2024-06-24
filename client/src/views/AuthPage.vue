@@ -17,12 +17,12 @@
         <button
           @click="activeAuthSec($event, 'login')"
           id="0"
-          :class="act === 'login' ? 'text-w1' : 'text-[#9FA6B2]'"
+          :class="act === 'login' ? 'text-w1' : 'text-[#65676b]'"
         >Login</button>
         <button
           @click="activeAuthSec($event, 'signup')"
           id="1"
-          :class="act === 'signup' ? 'text-w1' : 'text-[#9FA6B2]'"
+          :class="act === 'signup' ? 'text-w1' : 'text-[#65676b]'"
         >Signup</button>
       </div>
       <component

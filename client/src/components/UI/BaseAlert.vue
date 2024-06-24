@@ -4,7 +4,7 @@
       <div
         v-if="show"
         role="alert"
-        :class="['alert fixed left-1/2 -translate-x-1/2 top-4 z-20 max-w-md shadow-md text-white', type]"
+        :class="['alert fixed left-1/2 -translate-x-1/2 top-4 z-20 max-w-md shadow-md text-w1', type]"
       >
         <Info v-if="type === 'alert-info'" />
         <TriangleAlert v-if="type === 'alert-warning'" />

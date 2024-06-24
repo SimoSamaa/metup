@@ -40,8 +40,6 @@ export default {
     });
 
     const res = await req.json();
-    console.log('zaba', res);
-
 
     if (!req.ok) {
       throw new Error(res.message || 'Something went wrong');
