@@ -4,6 +4,10 @@
 @tailwind components;
 @tailwind utilities;
 
+* {
+  // border: 2px solid red;
+}
+
 @layer base {
   :root {
     @include colorsApp();
