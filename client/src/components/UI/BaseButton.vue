@@ -22,10 +22,10 @@ defineProps<{
 
 <style scoped lang="scss">
 .bg-blue2 {
-  @apply hover:bg-blue-700;
+  @apply hover:bg-blue-700 focus-visible:bg-blue-700;
 }
 
 .bg-green-500 {
-  @apply hover:bg-green-700;
+  @apply hover:bg-green-700 focus-visible:bg-green-700;
 }
 </style>

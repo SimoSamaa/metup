@@ -1,12 +1,12 @@
 <template>
-  <nav class="h-[57.7px] max-[950px]:max-w-full max-w-md w-full p-1 relative">
+  <nav class="h-[57.7px] max-[950px]:max-w-full max-w-md w-full py-1 relative">
     <span
       ref="activePage"
-      class="z-10 absolute left-0 bottom-0 w-[calc(100%/3)] h-[6px] rounded-t-xl bg-blue2 duration-300 ease-out transition-all"
+      class="z-10 absolute rounded-t-xl bottom-0 w-[calc(100%/3)] h-[6px] bg-blue2 duration-300 ease-out transition-all"
     ></span>
     <ul
       ref="routerLinkContainer"
-      class="flex h-[100%]"
+      class="flex gap-1 h-[100%]"
     >
       <li>
         <router-link to="/home">
@@ -45,7 +45,8 @@ const activeRouterLinkPage = () => {
 
   const updateActivePage = (path: string) => {
     const index = ['/home', '/friends', '/watch'].indexOf(path);
-    if (index !== -1) act.style.left = `${index * 100 / 3}%`;
+    if (index !== -1) act.style.left = `${(index * (100) / 3)}%`;
+
   };
 
   updateActivePage(route.path);
@@ -66,22 +67,22 @@ onMounted(() => {
 <style scoped lang="scss">
 nav {
   ul li {
-    @apply w-[calc(100%/3)] duration-300 ease-out transition-all relative;
-
-    &:hover {
-      @apply bg-w2 rounded-md;
-    }
-
-    &:hover a.router-link-active {
-      @apply bg-w1;
-    }
+    @apply w-[calc(100%/3)] relative;
 
     a {
-      @apply h-full grid place-items-center;
-    }
+      @apply h-full grid place-items-center rounded-md duration-300 ease-out transition-colors hover:bg-w2 focus-visible:bg-w2;
 
-    a.router-link-active svg {
-      @apply stroke-blue2;
+      &.router-link-active {
+        @apply bg-w1 outline-none;
+
+        & div {
+          @apply hidden;
+        }
+      }
+
+      &.router-link-active svg {
+        @apply stroke-blue2;
+      }
     }
   }
 }

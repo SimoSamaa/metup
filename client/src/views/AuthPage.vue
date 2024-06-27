@@ -17,12 +17,12 @@
         <button
           @click="activeAuthSec($event, 'login')"
           id="0"
-          :class="act === 'login' ? 'text-w1' : 'text-[#65676b]'"
+          :class="act === 'login' ? 'text-w1' : 'text-inherit'"
         >Login</button>
         <button
           @click="activeAuthSec($event, 'signup')"
           id="1"
-          :class="act === 'signup' ? 'text-w1' : 'text-[#65676b]'"
+          :class="act === 'signup' ? 'text-w1' : 'text-inherit'"
         >Signup</button>
       </div>
       <component
@@ -38,7 +38,7 @@
 
 <script lang="ts" setup>
 import { ref, computed } from 'vue';
-import Logo3D from '@/components/Logo3D.vue';
+import Logo3D from '@/components/layouts/Logo3D.vue';
 import loginSection from '@/components/auth/LoginSection.vue';
 import SignupSection from '@/components/auth/SignupSection.vue';
 

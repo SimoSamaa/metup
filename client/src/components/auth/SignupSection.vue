@@ -81,7 +81,7 @@
             type="date"
             placeholder="Password"
             v-model.trim="signupDataForm.date.value"
-            :class="['text-[#65676b]', { 'input-error text-red-600': !signupDataForm.date.isValidate }]"
+            :class="{ 'input-error text-red-600': !signupDataForm.date.isValidate }"
             @blur="clearValidity('date')"
           >
           <CalendarDays
@@ -315,7 +315,7 @@ onMounted(() => {
 // GENDER
 .gender {
   label {
-    @apply flex-1 flex gap-2 items-center text-[#65676b] bg-white px-4 h-[48px] rounded-md cursor-pointer bg-opacity-50 border-2 border-third;
+    @apply flex-1 flex gap-2 items-center bg-white px-4 h-[48px] rounded-md cursor-pointer bg-opacity-50 border-2 border-third;
 
     &:focus {
       @apply outline-none border-blue2;

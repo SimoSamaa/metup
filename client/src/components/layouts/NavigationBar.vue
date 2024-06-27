@@ -1,5 +1,5 @@
 <template>
-  <header class="bg-w1 sticky top-0 px-4 shadow-sm border-b-2 border-third text-[#606266]">
+  <header class="bg-w1 sticky top-0 px-4 shadow-sm border-b-2 border-third z-10">
     <div class="flex items-center justify-between h-[56px]">
       <!-- NAVIGATION BAR (SEARCH) -->
       <NavSearch />
@@ -23,9 +23,9 @@
         </button>
         <button>
           <!-- <img
-          src=""
-          alt="profile"
-        > -->
+            src=""
+            alt="profile"
+          > -->
           <BaseHover
             title="account"
             bottom="-55px"
@@ -43,13 +43,15 @@
 import NavSearch from './includes/NavSearch.vue';
 import NavLinks from './includes/NavLinks.vue';
 import { Bell, MessagesSquare } from 'lucide-vue-next';
+
+const test = 'https://i.ibb.co/9ZxV6Sc/Whats-App-Image-2024-06-26-at-18-58-02.jpg';
 </script>
 
 <style lang="scss" scoped>
 // USER ACTIONS
 .user-actions {
   button {
-    @apply bg-w2 size-[40px] rounded-full grid place-items-center cursor-pointer hover:bg-third relative;
+    @apply bg-w2 size-[40px] rounded-full grid place-items-center cursor-pointer hover:bg-third focus-visible:bg-third relative;
   }
 }
 </style>

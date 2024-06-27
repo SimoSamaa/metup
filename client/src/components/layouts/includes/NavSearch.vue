@@ -2,7 +2,10 @@
   <div
     :class="['navigation-search py-2 flex gap-2 relative w-[calc(300px+0.5rem)]', { 'search-container-sm': focusSearch }]"
   >
-    <button v-if="Boolean(!focusSearch)">
+    <button
+      v-if="Boolean(!focusSearch)"
+      @click="$router.push({ name: 'home' })"
+    >
       <img
         class="max-w-10"
         src="@/assets/logo-2D.png"
@@ -23,6 +26,7 @@
           type="text"
           placeholder="Search Metup"
           v-model="inputSearch"
+          @input="focusSearch = true"
           class="one-ele placeholder:text-inherit bg-w2 rounded-full pr-4 pl-9 focus:pl-4 outline-none border border-third transition-all duration-200 ease-in-out w-full h-[40px]"
         >
         <Search class="search pointer-events-none absolute left-2 top-1/2 -translate-y-1/2" />
@@ -37,13 +41,21 @@
         v-if="Boolean(focusSearch)"
         class="one-ele -z-10 top-0 -left-4 absolute w-[calc(100%+1rem)] min-h-[100px] pt-[60px] bg-w1 shadow-xl rounded-b-lg"
       >
-        <div class="one-ele flex justify-between p-4">
-          <p class="one-ele font-semibold">Recent</p>
-          <span class="one-ele text-blue-500">Edit</span>
+        <div v-if="false">
+          <div class="one-ele flex justify-between p-4">
+            <p class="one-ele font-semibold">Recent</p>
+            <span class="one-ele text-blue-500">Edit</span>
+          </div>
+          <ul class="one-ele p-4">
+            <li>one element</li>
+          </ul>
         </div>
-        <ul class="one-ele p-4">
-          none
-        </ul>
+        <p
+          v-else
+          class="one-ele flex items-center justify-center gap-2 p-4 text-center font-semibold"
+        >No recent searches
+          <History :size="20" />
+        </p>
       </div>
     </div>
   </div>
@@ -51,7 +63,7 @@
 
 <script lang="ts" setup>
 import { ref, onMounted } from 'vue';
-import { Search, X, ArrowLeft } from 'lucide-vue-next';
+import { Search, X, ArrowLeft, History } from 'lucide-vue-next';
 
 const focusSearch = ref(false);
 const inputSearch = ref('');

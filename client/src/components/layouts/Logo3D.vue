@@ -32,7 +32,7 @@ onMounted(() => {
   scene.add(pointLight);
 
   const fbxLoader = new FBXLoader();
-  fbxLoader.load(path.value('../assets/logo-3D.fbx'), (mesh: any) => {
+  fbxLoader.load(path.value('../../assets/logo-3D.fbx'), (mesh: any) => {
     mesh.children[0].material = new THREE.MeshStandardMaterial({ color: '#ffffff' });
     mesh.children[1].material = new THREE.MeshStandardMaterial({ color: '#1877F2' });
     scene.add(mesh);

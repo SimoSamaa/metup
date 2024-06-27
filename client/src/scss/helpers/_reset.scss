@@ -4,10 +4,6 @@
 @tailwind components;
 @tailwind utilities;
 
-* {
-  // border: 2px solid red;
-}
-
 @layer base {
   :root {
     @include colorsApp();
@@ -22,7 +18,7 @@
   }
 
   #app {
-    @apply h-screen bg-w2;
+    @apply min-h-screen bg-w2 text-[#606266];
   }
 
   h1 {
@@ -35,5 +31,9 @@
 
   h3 {
     @apply text-2xl font-bold;
+  }
+
+  img {
+    @apply max-w-full h-auto;
   }
 }
