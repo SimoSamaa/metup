@@ -14,12 +14,12 @@
     </button>
 
     <div class="flex gap-2 w-full pr-4">
-      <div
+      <button
         v-if="Boolean(focusSearch)"
         class="hover:bg-w2 self-center cursor-pointer size-[36px] rounded-full grid place-content-center"
       >
         <ArrowLeft :size="20" />
-      </div>
+      </button>
       <!-- SEARCH FIELD -->
       <div :class="['search-field search-field-sm one-ele relative [&_svg]:w-[20px]']">
         <input

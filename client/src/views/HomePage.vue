@@ -54,8 +54,11 @@
       </ul>
     </section>
     <!-- APP CONTENT (POSTS, STORIES) -->
-    <section class="flex-1">
-      <h1>Home</h1>
+    <section class="flex-1 px-8 py-4">
+      <div class="w-full max-w-[590px] mx-auto grid">
+        <!-- STORES -->
+        <MetupStories />
+      </div>
     </section>
     <!-- RIGHT SIDE -->
     <section class="home-sides max-[950px]:hidden">
@@ -71,7 +74,7 @@
           />
         </button>
       </div>
-      <ul v-if="false">
+      <ul v-if="true">
         <li>
           <button>
             <div>
@@ -89,7 +92,7 @@
       <p
         v-else
         class="flex items-center gap-2 font-semibold absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 m-auto"
-      >No Contact
+      >No Contacts
         <Frown :size="20" />
       </p>
     </section>
@@ -99,6 +102,7 @@
 <script lang="ts" setup>
 import { ref, onMounted } from 'vue';
 import { Search, Frown } from 'lucide-vue-next';
+import MetupStories from '@/components/home/MetupStories.vue';
 </script>
 
 <style scoped lang="scss">
