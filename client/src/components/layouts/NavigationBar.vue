@@ -21,11 +21,11 @@
             bottom="-55px"
           />
         </button>
-        <button>
-          <!-- <img
-            src=""
-            alt="profile"
-          > -->
+        <button class="overflow-hidden">
+          <img
+            src="https://i.ibb.co/9ZxV6Sc/Whats-App-Image-2024-06-26-at-18-58-02.jpg"
+            alt="user-pic"
+          >
           <BaseHover
             title="account"
             bottom="-55px"
@@ -43,15 +43,13 @@
 import NavSearch from './includes/NavSearch.vue';
 import NavLinks from './includes/NavLinks.vue';
 import { Bell, MessagesSquare } from 'lucide-vue-next';
-
-const test = 'https://i.ibb.co/9ZxV6Sc/Whats-App-Image-2024-06-26-at-18-58-02.jpg';
 </script>
 
 <style lang="scss" scoped>
 // USER ACTIONS
 .user-actions {
   button {
-    @apply bg-w2 size-[40px] rounded-full grid place-items-center cursor-pointer hover:bg-third focus-visible:bg-third relative;
+    @apply bg-w2 size-[40px] rounded-full grid place-items-center cursor-pointer relative;
   }
 }
 </style>

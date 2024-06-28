@@ -54,10 +54,12 @@
       </ul>
     </section>
     <!-- APP CONTENT (POSTS, STORIES) -->
-    <section class="flex-1 px-8 py-4">
+    <section class="flex-1 px-8 py-4 max-[650px]:p-0">
       <div class="w-full max-w-[590px] mx-auto grid">
         <!-- STORES -->
         <MetupStories />
+        <!-- POST FORM -->
+        <PostForm />
       </div>
     </section>
     <!-- RIGHT SIDE -->
@@ -103,6 +105,7 @@
 import { ref, onMounted } from 'vue';
 import { Search, Frown } from 'lucide-vue-next';
 import MetupStories from '@/components/home/MetupStories.vue';
+import PostForm from '@/components/home/PostForm.vue';
 </script>
 
 <style scoped lang="scss">
