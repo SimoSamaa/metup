@@ -65,6 +65,4 @@ router.post('/login',
   ],
   userController.login);
 
-router.get('/user/:userId', userController.getUser);
-
 export default router;

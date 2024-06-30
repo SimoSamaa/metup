@@ -14,6 +14,7 @@ interface registerPayload extends loginPayload {
 
 interface User extends StateTree {
   id: string;
+  token: string;
   username: string;
   picture: string;
   firstName: string;
@@ -21,11 +22,4 @@ interface User extends StateTree {
   verified: boolean;
 }
 
-interface userWitheToken extends User { token: string; }
-
-interface AuthState extends StateTree {
-  token: string | null;
-  userId: string | null;
-}
-
-export type { loginPayload, registerPayload, AuthState, User, userWitheToken };
+export type { loginPayload, registerPayload, User };

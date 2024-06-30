@@ -23,7 +23,7 @@
         </button>
         <button class="overflow-hidden">
           <img
-            :src="user?.picture"
+            :src="user.picture"
             alt="user-pic"
           >
           <BaseHover
@@ -43,11 +43,11 @@
 import { computed } from 'vue';
 import NavSearch from './includes/NavSearch.vue';
 import NavLinks from './includes/NavLinks.vue';
-import useUserStore from '@/modules/user/index';
+import useAuthStore from '@/modules/auth/index';
 import { Bell, MessagesSquare } from 'lucide-vue-next';
 
-const userStore = useUserStore();
-const user = computed(() => userStore.user);
+const authStore = useAuthStore();
+const user = computed(() => authStore.user);
 
 </script>
 

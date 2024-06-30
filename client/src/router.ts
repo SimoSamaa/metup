@@ -43,6 +43,12 @@ router.beforeEach((to, _, next) => {
   const authStore = useAuthStore();
   const isAuth = authStore.isAuth;
 
+  console.log('ss', authStore.userId);
+  console.log('ss', authStore.token);
+  console.log('ss', authStore.getUser);
+
+
+
   if (to.meta.requiresAuth && !isAuth) {
     next('/auth');
   } else if (to.meta.requiresUnAuth && isAuth) {

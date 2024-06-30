@@ -1,8 +1,8 @@
-import type { registerPayload, loginPayload, AuthState, userWitheToken } from '@/types/userTypes';
+import type { registerPayload, loginPayload, User } from '@/types/userTypes';
 import handleRequest from '@/hooks/handleRequest';
 
 export default {
-  async register(this: AuthState, payload: registerPayload) {
+  async register(payload: registerPayload) {
     const registerData = {
       ...payload,
       bYear: new Date(payload.date).getFullYear(),
@@ -10,37 +10,30 @@ export default {
       bDay: new Date(payload.date).getDate(),
     };
 
-    const res = await handleRequest<userWitheToken, registerPayload>('register', 'POST', registerData);
-
-    this.token = res.token;
-    this.userId = res.id;
+    await handleRequest<User, registerPayload>('register', 'POST', registerData);
   },
-  async login(this: AuthState, payload: loginPayload) {
-    const res = await handleRequest<userWitheToken, loginPayload>('login', 'POST', payload);
+  async login(this: { user: User; }, payload: loginPayload) {
+    const res = await handleRequest<User, loginPayload>('login', 'POST', payload);
 
-    localStorage.setItem('token', res.token);
-    localStorage.setItem('userId', res.id);
+    localStorage.setItem('user', JSON.stringify(res));
 
-    this.token = res.token;
-    this.userId = res.id;
+    this.user = res;
   },
-  tryLogin(this: AuthState) {
-    const token: string = localStorage['token'];
-    const userId: string = localStorage['userId'];
+  // tryLogin(this: AuthState) {
+  //   const token: string = localStorage['token'];
+  //   const userId: string = localStorage['userId'];
 
-    if (token && userId) {
-      this.token = token;
-      this.userId = userId;
-    } else {
-      this.token = null;
-      this.userId = null;
-    }
-  },
-  async logout(this: AuthState) {
-    this.token = null;
-    this.userId = null;
+  //   if (token && userId) {
+  //     this.token = token;
+  //     this.userId = userId;
+  //   } else {
+  //     this.token = null;
+  //     this.userId = null;
+  //   }
+  // },
+  async logout(this: User) {
+    this.user = {};
 
-    localStorage.removeItem('token');
-    localStorage.removeItem('userId');
+    localStorage.removeItem('user');
   }
 };

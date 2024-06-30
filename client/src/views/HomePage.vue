@@ -8,7 +8,7 @@
             <div>
               <img
                 class="rounded-full"
-                :src="user?.picture"
+                :src="user.picture"
                 alt="user-pic"
               >
             </div>
@@ -106,10 +106,10 @@ import { computed } from 'vue';
 import { Search, Frown } from 'lucide-vue-next';
 import MetupStories from '@/components/home/MetupStories.vue';
 import PostForm from '@/components/home/PostForm.vue';
-import useUserStore from '@/modules/user/index';
+import useAuthStore from '@/modules/auth/index';
 
-const userStore = useUserStore();
-const user = computed(() => userStore.user);
+const authStore = useAuthStore();
+const user = computed(() => authStore.user);
 const fullName = computed(() => `${user.value?.firstName} ${user.value?.lastName}`);
 </script>
 

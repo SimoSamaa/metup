@@ -1,12 +1,17 @@
 import { defineStore } from 'pinia';
 import authActions from './actions';
 import authGetters from './getters';
-import type { AuthState } from '@/types/userTypes';
+import type { User } from '@/types/userTypes';
+
+const parseUser = (user: User | {} = {}) => {
+  const userString = localStorage['user'];
+  if (userString) user = JSON.parse(userString);
+  return user;
+};
 
 const useAuthStore = defineStore('auth', {
   state: () => ({
-    token: localStorage['token'] ?? null as AuthState['token'],
-    userId: localStorage['userId'] ?? null as AuthState['userId'],
+    user: parseUser() as User,
   }),
   actions: authActions,
   getters: authGetters,
