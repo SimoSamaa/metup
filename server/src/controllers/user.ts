@@ -70,7 +70,7 @@ export const activateAccount = async (req: Request, res: Response, next: NextFun
     type UserToken = { id: string; iat: number, exp: number; };
 
     const { token } = req.body as { token: string; };
-    const userToken: UserToken = verify(token, process.env.TOKEN_SECRET as Secret) as UserToken;
+    const userToken = verify(token, process.env.TOKEN_SECRET as Secret) as UserToken;
     const user: IUser | null = await User.findById(userToken.id);
 
     // CHECK IF USER NOT EXIST
