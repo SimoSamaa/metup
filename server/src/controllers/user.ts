@@ -42,7 +42,7 @@ export const register = async (req: Request, res: Response, next: NextFunction) 
     const url = `${process.env.CLIENT_URL}/activate/${emailToken}`;
     const emailVerification = verificationTemp(user.firstName, url);
 
-    sendEmail(user.email, 'METUP Verification Email', emailVerification);
+    // sendEmail(user.email, 'METUP Verification Email', emailVerification);
 
     // CREATE GENERATE USER TOKEN
     const token = generateToken({ id }, '1h');
@@ -122,7 +122,29 @@ export const login = async (req: Request, res: Response, next: NextFunction) => 
       firstName: user!.firstName,
       lastName: user!.lastName,
       verified: user!.verified,
-      message: 'User logged successfully.'
+    });
+    return;
+
+  } catch (err: unknown | Error) {
+    HandledError.serverFail(err, next);
+    return err;
+  }
+};
+
+export const getUser = async (req: Request, res: Response, next: NextFunction) => {
+  try {
+    const userId = req.params.userId;
+    const user: IUser | null = await User.findById(userId);
+
+    HandledError.notFound(user, 'User Not Found');
+
+    res.status(200).json({
+      id: userId,
+      username: user!.username,
+      picture: user!.picture,
+      firstName: user!.firstName,
+      lastName: user!.lastName,
+      verified: user!.verified,
     });
     return;
 

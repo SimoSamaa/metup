@@ -8,11 +8,11 @@
             <div>
               <img
                 class="rounded-full"
-                src="https://i.ibb.co/9ZxV6Sc/Whats-App-Image-2024-06-26-at-18-58-02.jpg"
+                :src="user?.picture"
                 alt="user-pic"
               >
             </div>
-            <p>li po</p>
+            <p>{{ fullName }}</p>
           </router-link>
         </li>
         <li>
@@ -102,10 +102,15 @@
 </template>
 
 <script lang="ts" setup>
-import { ref, onMounted } from 'vue';
+import { computed } from 'vue';
 import { Search, Frown } from 'lucide-vue-next';
 import MetupStories from '@/components/home/MetupStories.vue';
 import PostForm from '@/components/home/PostForm.vue';
+import useUserStore from '@/modules/user/index';
+
+const userStore = useUserStore();
+const user = computed(() => userStore.user);
+const fullName = computed(() => `${user.value?.firstName} ${user.value?.lastName}`);
 </script>
 
 <style scoped lang="scss">

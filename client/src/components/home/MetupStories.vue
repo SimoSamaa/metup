@@ -2,7 +2,7 @@
   <main class="grid relative overflow-x-hidden">
     <button
       @click="handleScrollAction(-149)"
-      :class="['stories-btn left-[-48px] opacity-0', { 'left-[20px] opacity-100': actionLeft }]"
+      :class="['not-allowed left-[-48px] opacity-0', { 'left-[20px] opacity-100': actionLeft }]"
     >
       <ChevronLeft />
     </button>
@@ -60,7 +60,7 @@
       </li>
     </ul>
     <button
-      :class="['stories-btn right-[-48px] opacity-0', { 'right-[20px] opacity-100': actionRight }]"
+      :class="['not-allowed right-[-48px] opacity-0', { 'right-[20px] opacity-100': actionRight }]"
       @click="handleScrollAction(149)"
     >
       <ChevronRight />

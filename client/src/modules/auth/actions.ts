@@ -1,18 +1,8 @@
-interface loginPayload {
-  email: string;
-  password: string;
-}
-
-interface registerPayload extends loginPayload {
-  firstName: string;
-  lastName: string;
-  date: string;
-  gender: string;
-}
+import type { registerPayload, loginPayload, AuthState, userWitheToken } from '@/types/userTypes';
+import handleRequest from '@/hooks/handleRequest';
 
 export default {
-  async register(payload: registerPayload) {
-
+  async register(this: AuthState, payload: registerPayload) {
     const registerData = {
       ...payload,
       bYear: new Date(payload.date).getFullYear(),
@@ -20,29 +10,37 @@ export default {
       bDay: new Date(payload.date).getDate(),
     };
 
-    const req = await fetch(`${import.meta.env.VITE_SERVER_URL}/register`, {
-      method: 'POST',
-      body: JSON.stringify(registerData),
-      headers: { 'Content-Type': 'application/json', },
-    });
+    const res = await handleRequest<userWitheToken, registerPayload>('register', 'POST', registerData);
 
-    const res = await req.json();
+    this.token = res.token;
+    this.userId = res.id;
+  },
+  async login(this: AuthState, payload: loginPayload) {
+    const res = await handleRequest<userWitheToken, loginPayload>('login', 'POST', payload);
 
-    if (!req.ok) {
-      throw new Error(res.message || 'Something went wrong');
+    localStorage.setItem('token', res.token);
+    localStorage.setItem('userId', res.id);
+
+    this.token = res.token;
+    this.userId = res.id;
+  },
+  tryLogin(this: AuthState) {
+    const token: string = localStorage['token'];
+    const userId: string = localStorage['userId'];
+
+    if (token && userId) {
+      this.token = token;
+      this.userId = userId;
+    } else {
+      this.token = null;
+      this.userId = null;
     }
   },
-  async login(payload: loginPayload) {
-    const req = await fetch(`${import.meta.env.VITE_SERVER_URL}/login`, {
-      method: 'POST',
-      body: JSON.stringify(payload),
-      headers: { 'Content-Type': 'application/json', },
-    });
+  async logout(this: AuthState) {
+    this.token = null;
+    this.userId = null;
 
-    const res = await req.json();
-
-    if (!req.ok) {
-      throw new Error(res.message || 'Something went wrong');
-    }
-  },
+    localStorage.removeItem('token');
+    localStorage.removeItem('userId');
+  }
 };

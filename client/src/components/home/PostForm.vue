@@ -3,12 +3,12 @@
     <div class="flex gap-4">
       <div class="size-[40px] rounded-full overflow-hidden">
         <img
-          src="https://i.ibb.co/9ZxV6Sc/Whats-App-Image-2024-06-26-at-18-58-02.jpg"
+          :src="user?.picture"
           alt="user-pic"
         >
       </div>
       <button class="flex-1 text-left px-4 rounded-badge bg-w2 max-[365px]:text-sm">
-        What's on your mind?, first name?
+        What's on your mind?, {{ user?.firstName }}?
       </button>
     </div>
     <div class="post-btn flex mt-4 pt-2 border-t border-third">
@@ -29,7 +29,12 @@
 </template>
 
 <script lang="ts" setup>
+import { computed } from 'vue';
 import { Video, Images, Laugh } from 'lucide-vue-next';
+import useUserStore from '@/modules/user/index';
+
+const userStore = useUserStore();
+const user = computed(() => userStore.user);
 </script>
 
 <style lang="scss" scoped>

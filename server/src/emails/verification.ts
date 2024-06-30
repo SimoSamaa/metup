@@ -22,7 +22,7 @@ const verificationEmailTem = (name: string, url: string) => {
     </p>
     <a
       href="${url}"
-      style="background-color: #1877F2; color: #fff; border: none; padding: 1rem ; border-radius: .3rem; font-weight: bold; cursor: pointer; display: block; text-decoration: none;"
+      style="background-color: #1877F2; color: #fff; border: none; padding: 1rem; border-radius: .3rem; font-weight: bold; cursor: pointer; display: block; text-decoration: none; width: 400px; max-width: 90%; margin: 0 auto;"
     >
       Confirm your account
     </a>

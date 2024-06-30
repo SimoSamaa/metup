@@ -4,7 +4,7 @@
       <div
         v-if="show"
         role="alert"
-        :class="['alert fixed left-1/2 -translate-x-1/2 top-4 z-20 max-w-md shadow-md text-w1', type]"
+        :class="['alert flex w-[calc(100%-1rem)] fixed left-1/2 -translate-x-1/2 top-4 z-20 max-w-md shadow-md text-w1', type]"
       >
         <Info v-if="type === 'alert-info'" />
         <TriangleAlert v-if="type === 'alert-warning'" />
@@ -19,11 +19,15 @@
 <script lang="ts" setup>
 import { Info, TriangleAlert, CircleX, BadgeCheck } from 'lucide-vue-next';
 
-defineProps<{
+const props = defineProps<{
   show: boolean;
   message: string;
   type: string;
 }>();
+
+setTimeout(() => {
+  !props.show;
+}, 5000);
 </script>
 
 <style scoped lang="scss">

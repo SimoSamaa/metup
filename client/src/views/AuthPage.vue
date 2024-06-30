@@ -17,12 +17,12 @@
         <button
           @click="activeAuthSec($event, 'login')"
           id="0"
-          :class="act === 'login' ? 'text-w1' : 'text-inherit'"
+          :class="['not-allowed', act === 'login' ? 'text-w1' : 'text-inherit']"
         >Login</button>
         <button
           @click="activeAuthSec($event, 'signup')"
           id="1"
-          :class="act === 'signup' ? 'text-w1' : 'text-inherit'"
+          :class="['not-allowed', act === 'signup' ? 'text-w1' : 'text-inherit']"
         >Signup</button>
       </div>
       <component

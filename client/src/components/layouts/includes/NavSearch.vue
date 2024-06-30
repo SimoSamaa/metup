@@ -3,7 +3,7 @@
     :class="['navigation-search py-2 flex gap-2 relative w-[calc(300px+0.5rem)]', { 'search-container-sm': focusSearch }]"
   >
     <button
-      class="logo"
+      class="not-allowed"
       v-if="Boolean(!focusSearch)"
       @click="$router.push({ name: 'home' })"
     >

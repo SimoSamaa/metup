@@ -21,7 +21,7 @@
     @apply min-h-screen bg-w2 text-[#606266];
   }
 
-  #app button:not(.logo, .stories-btn) {
+  #app button:not(.not-allowed) {
     @apply hover:bg-third focus-visible:bg-third max-[650px]:hover:bg-w2;
   }
 

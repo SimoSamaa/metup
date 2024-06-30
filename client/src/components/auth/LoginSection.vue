@@ -51,7 +51,7 @@
 <script lang="ts" setup>
 import { ref, reactive } from 'vue';
 import { useRouter } from 'vue-router';
-import useAuthStore from '@/modules/auth';
+import useAuthStore from '@/modules/auth/index';
 import { Info } from 'lucide-vue-next';
 
 const authStore = useAuthStore();
@@ -116,13 +116,12 @@ const submitLoginForm = async () => {
 
   try {
     isLoading.value = true;
-
     await authStore.login({
       email: loginDataForm.email.value,
       password: loginDataForm.password.value
     });
 
-    router.push({ name: 'home' });
+    router.replace({ name: 'home' });
 
   } catch (err) {
     console.error('error from login', (err));

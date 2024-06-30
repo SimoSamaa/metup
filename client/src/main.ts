@@ -17,8 +17,7 @@ app.component('base-alert', BaseAlert);
 app.component('base-button', BaseButton);
 app.component('BaseHover', BaseHover);
 
-app
-  .use(store)
-  .use(router);
+app.use(store);
+app.use(router);
 
 app.mount('#app');

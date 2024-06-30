@@ -23,7 +23,7 @@
         </button>
         <button class="overflow-hidden">
           <img
-            src="https://i.ibb.co/9ZxV6Sc/Whats-App-Image-2024-06-26-at-18-58-02.jpg"
+            :src="user?.picture"
             alt="user-pic"
           >
           <BaseHover
@@ -40,9 +40,15 @@
 </template>
 
 <script lang="ts" setup>
+import { computed } from 'vue';
 import NavSearch from './includes/NavSearch.vue';
 import NavLinks from './includes/NavLinks.vue';
+import useUserStore from '@/modules/user/index';
 import { Bell, MessagesSquare } from 'lucide-vue-next';
+
+const userStore = useUserStore();
+const user = computed(() => userStore.user);
+
 </script>
 
 <style lang="scss" scoped>
