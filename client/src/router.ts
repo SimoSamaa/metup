@@ -18,7 +18,15 @@ const router = createRouter({
       path: '/home',
       name: 'home',
       meta: { requiresAuth: true },
-      component: () => import('@/views/HomePage.vue')
+      component: () => import('@/views/HomePage.vue'),
+      children: [
+        {
+          props: true,
+          path: 'activate/:token',
+          name: 'activate',
+          component: () => import('@/components/layouts/ActivateAccount.vue')
+        }
+      ]
     },
     {
       path: '/friends',
@@ -42,12 +50,6 @@ const router = createRouter({
 router.beforeEach((to, _, next) => {
   const authStore = useAuthStore();
   const isAuth = authStore.isAuth;
-
-  console.log('ss', authStore.userId);
-  console.log('ss', authStore.token);
-  console.log('ss', authStore.getUser);
-
-
 
   if (to.meta.requiresAuth && !isAuth) {
     next('/auth');

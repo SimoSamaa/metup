@@ -18,7 +18,7 @@
         >
           <div class="flex-1 overflow-hidden">
             <img
-              src="https://res.cloudinary.com/dmhcnhtng/image/upload/v1643044376/avatars/default_pic_jeaybr.png"
+              :src="user?.picture"
               alt="default-story-pic"
             >
           </div>
@@ -69,13 +69,18 @@
 </template>
 
 <script lang="ts" setup>
-import { ref, onMounted } from 'vue';
+import { ref, computed, onMounted } from 'vue';
+import useAuthStore from '@/modules/auth/index';
 import { Plus, ChevronLeft, ChevronRight } from 'lucide-vue-next';
+
+const authStore = useAuthStore();
 
 const storiesContainer = ref<HTMLElement | null>(null);
 const actionLeft = ref(false);
 const actionRight = ref(false);
 const boxes = ref([1, 2, 3, 4, 5, 6, 7, 8, 9, 10]);
+
+const user = computed(() => authStore.getUser);
 
 const handleScrollAction = (val: number) => {
   (storiesContainer.value as HTMLElement).scrollBy({

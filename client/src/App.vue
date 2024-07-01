@@ -11,6 +11,9 @@ import NavigationBar from '@/components/layouts/NavigationBar.vue';
 
 const route = useRoute();
 const allowComponents = computed(() =>
-  route.name === 'home' || route.name === 'watch' || route.name === 'friends'
+  route.name === 'home' ||
+  route.name === 'watch' ||
+  route.name === 'friends' ||
+  route.name === 'activate'
 );
 </script>

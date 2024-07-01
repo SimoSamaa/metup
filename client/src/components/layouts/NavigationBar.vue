@@ -1,5 +1,5 @@
 <template>
-  <header class="bg-w1 sticky top-0 px-4 shadow-sm border-b-2 border-third z-10">
+  <header class="bg-w1 sticky top-0 px-4 shadow-sm border-b-2 border-third z-[999]">
     <div class="flex items-center justify-between h-[56px]">
       <!-- NAVIGATION BAR (SEARCH) -->
       <NavSearch />

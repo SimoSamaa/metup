@@ -1,5 +1,6 @@
 <template>
   <main class="flex">
+    <RouterView />
     <!-- LEFT SIDE -->
     <section class="home-sides max-lg:hidden">
       <ul>
@@ -58,6 +59,13 @@
       <div class="w-full max-w-[590px] mx-auto grid">
         <!-- STORES -->
         <MetupStories />
+        <!-- RESEND VERIFICATION LINK -->
+        <!-- <div
+          class="bg-w1 p-4 rounded-md shadow-md text-black max-[650px]:rounded-none"
+          v-if="!user.verified"
+        >
+          your account is not verify yet, verify it now before it gets deleted after month from creation.
+        </div> -->
         <!-- POST FORM -->
         <PostForm />
       </div>
@@ -118,7 +126,7 @@ main {
 
   // HOME SIDES (LEFT AND RIGHT)
   .home-sides {
-    @apply relative w-[360px] max-2xl:w-[280px] h-[calc(100vh-57.6px)] max-[950px]:h-[calc(100vh-115.3px)] overflow-y-auto p-4;
+    @apply sticky top-[57.6px] w-[360px] max-2xl:w-[280px] h-[calc(100vh-57.6px)] max-[950px]:h-[calc(100vh-115.3px)] overflow-y-auto p-4;
 
     ul {
       @apply mt-2 grid gap-2;

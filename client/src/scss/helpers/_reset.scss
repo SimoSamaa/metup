@@ -9,13 +9,13 @@
     @include colorsApp();
   }
 
-  ::-webkit-scrollbar {
-    @apply w-2 bg-transparent;
-  }
+  // ::-webkit-scrollbar {
+  //   @apply w-2 bg-transparent;
+  // }
 
-  ::-webkit-scrollbar-thumb {
-    @apply bg-white bg-opacity-50 rounded-full;
-  }
+  // ::-webkit-scrollbar-thumb {
+  //   @apply bg-white bg-opacity-50 rounded-full;
+  // }
 
   #app {
     @apply min-h-screen bg-w2 text-[#606266];

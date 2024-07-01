@@ -1,5 +1,8 @@
 import type { registerPayload, loginPayload, User } from '@/types/userTypes';
 import handleRequest from '@/hooks/handleRequest';
+import useAuthStore from './index';
+
+type Token = { token: string; };
 
 export default {
   async register(payload: registerPayload) {
@@ -18,6 +21,19 @@ export default {
     localStorage.setItem('user', JSON.stringify(res));
 
     this.user = res;
+  },
+  async activateAccount(this: { user: User; }, payload: Token) {
+    const authStore = useAuthStore();
+    const token = authStore.token;
+
+    type resType = { message: string; verified: boolean; };
+    const res = await handleRequest<resType, Token>('activate', 'POST', payload, token);
+
+    const user: User = JSON.parse(localStorage['user']);
+    user.verified = res.verified;
+    const updatedValue = JSON.stringify(user);
+    localStorage.setItem('user', updatedValue);
+    this.user.verified = res.verified;
   },
   // tryLogin(this: AuthState) {
   //   const token: string = localStorage['token'];
