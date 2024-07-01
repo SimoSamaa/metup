@@ -45,8 +45,8 @@ const activateAccount = async () => {
   isLoading.value = true;
 
   try {
-    await authStore.activateAccount({ token: props.token });
-    message.value = 'Account activated successfully';
+    const res = await authStore.activateAccount({ token: props.token });
+    message.value = res;
     message.state = 'text-green-500';
     setTimeout(() => router.push({ name: 'home' }), 2000);
   } catch (err) {

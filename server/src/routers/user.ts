@@ -49,7 +49,7 @@ router.post('/register',
   userController.register
 );
 
-router.post('/activate', userController.activateAccount);
+router.post('/activate', isAuth, userController.activateAccount);
 
 router.post('/login',
   [
@@ -64,5 +64,7 @@ router.post('/login',
       .isLength({ min: 8 })
   ],
   userController.login);
+
+router.post('/resend-email-activate', isAuth, userController.resendEmailActivate);
 
 export default router;

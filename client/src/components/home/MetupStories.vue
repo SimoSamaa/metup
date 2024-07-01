@@ -18,7 +18,7 @@
         >
           <div class="flex-1 overflow-hidden">
             <img
-              :src="user?.picture"
+              :src="props.user?.picture"
               alt="default-story-pic"
             >
           </div>
@@ -69,18 +69,18 @@
 </template>
 
 <script lang="ts" setup>
-import { ref, computed, onMounted } from 'vue';
-import useAuthStore from '@/modules/auth/index';
+import { ref, onMounted } from 'vue';
 import { Plus, ChevronLeft, ChevronRight } from 'lucide-vue-next';
+import type { User } from '@/types/userTypes';
 
-const authStore = useAuthStore();
+const props = defineProps<{
+  user: User;
+}>();
 
 const storiesContainer = ref<HTMLElement | null>(null);
 const actionLeft = ref(false);
 const actionRight = ref(false);
 const boxes = ref([1, 2, 3, 4, 5, 6, 7, 8, 9, 10]);
-
-const user = computed(() => authStore.getUser);
 
 const handleScrollAction = (val: number) => {
   (storiesContainer.value as HTMLElement).scrollBy({
@@ -116,7 +116,7 @@ main {
     @apply min-w-[141px] h-[250px] bg-w1 shadow-md rounded-lg overflow-hidden scale-[.9];
 
     a {
-      @apply relative;
+      @apply relative h-full;
 
       &::before {
         @apply content-[''] absolute inset-0 bg-black opacity-0 z-10 duration-300 transition-opacity ease-out hover:opacity-20;

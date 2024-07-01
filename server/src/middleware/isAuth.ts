@@ -2,11 +2,9 @@ import { Request, Response, NextFunction } from 'express';
 import HandledError from '../utils/handledError';
 import { verify, Secret } from 'jsonwebtoken';
 
-interface UserRequest extends Request {
-  user?: any;
-}
+interface UserRequest extends Request { userId?: string; }
 
-export default async (req: UserRequest, res: Response, next: NextFunction) => {
+export default async (req: UserRequest, _: Response, next: NextFunction) => {
   try {
     const authHeader = req.header('Authorization');
 
@@ -26,7 +24,7 @@ export default async (req: UserRequest, res: Response, next: NextFunction) => {
         throw error;
       }
 
-      req.user = user;
+      req.userId = (user as { id: string; }).id;
       next();
     });
   } catch (err) {

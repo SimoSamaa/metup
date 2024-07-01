@@ -8,7 +8,7 @@
         >
       </div>
       <button class="flex-1 text-left px-4 rounded-badge bg-w2 max-[365px]:text-sm">
-        What's on your mind, {{ user.firstName }}?
+        What's on your mind, {{ props.user.firstName }}?
       </button>
     </div>
     <div class="post-btn flex mt-4 pt-2 border-t border-third">
@@ -29,12 +29,12 @@
 </template>
 
 <script lang="ts" setup>
-import { computed } from 'vue';
 import { Video, Images, Laugh } from 'lucide-vue-next';
-import useAuthStore from '@/modules/auth/index';
+import type { User } from '@/types/userTypes';
 
-const authStore = useAuthStore();
-const user = computed(() => authStore.user);
+const props = defineProps<{
+  user: User;
+}>();
 </script>
 
 <style lang="scss" scoped>

@@ -58,16 +58,11 @@
     <section class="flex-1 px-8 py-4 max-[650px]:p-0">
       <div class="w-full max-w-[590px] mx-auto grid">
         <!-- STORES -->
-        <MetupStories />
+        <MetupStories :user="user" />
         <!-- RESEND VERIFICATION LINK -->
-        <!-- <div
-          class="bg-w1 p-4 rounded-md shadow-md text-black max-[650px]:rounded-none"
-          v-if="!user.verified"
-        >
-          your account is not verify yet, verify it now before it gets deleted after month from creation.
-        </div> -->
+        <ResendVerification :user="user" />
         <!-- POST FORM -->
-        <PostForm />
+        <PostForm :user="user" />
       </div>
     </section>
     <!-- RIGHT SIDE -->
@@ -114,6 +109,7 @@ import { computed } from 'vue';
 import { Search, Frown } from 'lucide-vue-next';
 import MetupStories from '@/components/home/MetupStories.vue';
 import PostForm from '@/components/home/PostForm.vue';
+import ResendVerification from '@/components/home/ResendVerification.vue';
 import useAuthStore from '@/modules/auth/index';
 
 const authStore = useAuthStore();

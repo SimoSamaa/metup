@@ -17,9 +17,7 @@ export default {
   },
   async login(this: { user: User; }, payload: loginPayload) {
     const res = await handleRequest<User, loginPayload>('login', 'POST', payload);
-
     localStorage.setItem('user', JSON.stringify(res));
-
     this.user = res;
   },
   async activateAccount(this: { user: User; }, payload: Token) {
@@ -34,6 +32,16 @@ export default {
     const updatedValue = JSON.stringify(user);
     localStorage.setItem('user', updatedValue);
     this.user.verified = res.verified;
+
+    return res.message;
+  },
+  async resendActivatedLink() {
+    const authStore = useAuthStore();
+    const token = authStore.token;
+
+    const res = await handleRequest<{ message: string; }, null>('resend-email-activate', 'POST', null, token);
+
+    return res.message;
   },
   // tryLogin(this: AuthState) {
   //   const token: string = localStorage['token'];

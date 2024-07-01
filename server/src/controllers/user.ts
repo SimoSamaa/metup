@@ -7,6 +7,8 @@ import generateToken from '../utils/jwt';
 import sendEmail from '../utils/mailer';
 import verificationTemp from '../emails/verification';
 
+interface UserRequest extends Request { userId?: string; }
+
 // REGISTER USER (SIGNUP)
 export const register = async (req: Request, res: Response, next: NextFunction) => {
 
@@ -39,7 +41,7 @@ export const register = async (req: Request, res: Response, next: NextFunction) 
 
     // SEND EMAIL VALIDATION
     const emailToken = generateToken({ id }, '1h');
-    const url = `${process.env.CLIENT_URL}/activate/${emailToken}`;
+    const url = `${process.env.CLIENT_URL}/home/activate/${emailToken}`;
     const emailVerification = verificationTemp(user.firstName, url);
     sendEmail(user.email, 'METUP Verification Email', emailVerification);
 
@@ -56,7 +58,9 @@ export const register = async (req: Request, res: Response, next: NextFunction) 
       lastName: user.lastName,
       verified: user.verified,
     });
+
     return;
+
   } catch (err: unknown | Error) {
     HandledError.serverFail(err, next);
     return err;
@@ -64,7 +68,7 @@ export const register = async (req: Request, res: Response, next: NextFunction) 
 };
 
 // ACTIVATE ACCOUNT
-export const activateAccount = async (req: Request, res: Response, next: NextFunction) => {
+export const activateAccount = async (req: UserRequest, res: Response, next: NextFunction) => {
   try {
     type UserToken = { id: string; iat: number, exp: number; };
 
@@ -76,10 +80,12 @@ export const activateAccount = async (req: Request, res: Response, next: NextFun
     HandledError.notFound(user, 'User Not Found');
 
     if (user!.verified === true) {
-      res.status(400).json({ message: 'Account already activated.' });
+      const error = new HandledError('Account already activated', 400);
+      throw error;
     } else {
-      await User.findByIdAndUpdate(userToken.id, { verified: true });
-      res.status(200).json({ message: 'Account activated successfully.' });
+      const verified = true;
+      await User.findByIdAndUpdate(userToken.id, { verified });
+      res.status(200).json({ message: 'Account activated successfully', verified });
     }
 
     return;
@@ -122,6 +128,33 @@ export const login = async (req: Request, res: Response, next: NextFunction) => 
       lastName: user!.lastName,
       verified: user!.verified,
     });
+
+    return;
+
+  } catch (err: unknown | Error) {
+    HandledError.serverFail(err, next);
+    return err;
+  }
+};
+
+// RESEND EMAIL ACTIVATE
+export const resendEmailActivate = async (req: UserRequest, res: Response, next: NextFunction) => {
+  try {
+    const user: IUser | null = await User.findById(req.userId);
+
+    // CHECK IF USER NOT EXIST
+    HandledError.notFound(user, 'User Not Found');
+
+    if (user!.verified === true) {
+      const error = new HandledError('Account already activated', 400);
+      throw error;
+    }
+    const emailToken = generateToken({ id: req.userId }, '1h');
+    const url = `${process.env.CLIENT_URL}/home/activate/${emailToken}`;
+    const emailVerification = verificationTemp(user!.firstName, url);
+    sendEmail(user!.email, 'METUP Verification Email', emailVerification);
+    res.status(200).json({ message: 'Email sent successfully' });
+
     return;
 
   } catch (err: unknown | Error) {
