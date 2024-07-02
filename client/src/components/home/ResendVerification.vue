@@ -14,12 +14,9 @@
     <a
       @click="resendVerificationEmail()"
       href="#"
-      class="w-max text-blue2 font-semibold flex gap-1 items-center group ml-auto"
+      class="w-max text-blue2 font-semibold flex gap-1 items-center ml-auto relative"
     >Resend verification email
-      <SendHorizontal
-        class="group-hover:ml-2 duration-300 ease-out transition-all"
-        :size="20"
-      />
+      <SendHorizontal :size="20" />
     </a>
   </div>
 </template>
@@ -57,4 +54,12 @@ const resendVerificationEmail = async () => {
 };
 </script>
 
-<style scoped lang="scss"></style>
+<style scoped lang="scss">
+a::before {
+  @apply content-[''] absolute left-0 opacity-0 scale-0 -bottom-1 w-full h-[1px] bg-blue2 transition-all ease-out duration-300;
+
+  &:hover {
+    @apply bottom-0 opacity-100 scale-100;
+  }
+}
+</style>

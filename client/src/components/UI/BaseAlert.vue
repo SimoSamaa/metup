@@ -4,13 +4,13 @@
       <div
         v-if="show"
         role="alert"
-        :class="['alert flex w-[calc(100%-1rem)] fixed left-1/2 -translate-x-1/2 top-20 max-[950px]:top-36 z-20 max-w-md shadow-md text-w1', type]"
+        :class="['alert flex w-[calc(100%-1rem)] fixed left-1/2 -translate-x-1/2 top-20 max-[950px]:top-36 z-20 max-w-md shadow-md text-w1 text-left', type, custom]"
       >
         <Info v-if="type === 'alert-info'" />
         <TriangleAlert v-if="type === 'alert-warning'" />
         <CircleX v-if="type === 'alert-error'" />
         <BadgeCheck v-if="type === 'alert-success'" />
-        <span>{{ message }}l</span>
+        <span>{{ message }}</span>
       </div>
     </transition>
   </Teleport>
@@ -23,6 +23,7 @@ const props = defineProps<{
   show: boolean;
   message: string;
   type: string;
+  custom: string;
 }>();
 
 setTimeout(() => {

@@ -1,9 +1,11 @@
 <template>
   <!-- ALERT -->
   <base-alert
+    class="hidden"
     :show="!!showAlert"
-    message='Register success! Please activate your email to start'
+    message='Register success! login and check your email'
     type="alert-info"
+    custom="!top-4"
   ></base-alert>
 
   <section class="flex min-h-screen items-center px-4 relative z-10 isolate">
