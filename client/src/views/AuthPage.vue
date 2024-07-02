@@ -1,7 +1,6 @@
 <template>
   <!-- ALERT -->
   <base-alert
-    class="hidden"
     :show="!!showAlert"
     message='Register success! login and check your email'
     type="alert-info"

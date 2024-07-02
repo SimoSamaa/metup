@@ -22,7 +22,12 @@
   }
 
   #app button:not(.not-allowed) {
-    @apply hover:bg-third focus-visible:bg-third max-[650px]:hover:bg-w2;
+    @apply hover:bg-third focus-visible:bg-third max-[650px]:hover:bg-w2 duration-300 ease-out transition-all;
+
+    &.hover-w2 {
+      @apply hover:bg-w2 focus-visible:bg-w2;
+
+    }
   }
 
   h1 {

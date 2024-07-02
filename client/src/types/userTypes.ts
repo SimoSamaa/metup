@@ -14,7 +14,7 @@ interface registerPayload extends loginPayload {
 
 interface User extends StateTree {
   id: string;
-  token: string;
+  token: string | null;
   username: string;
   picture: string;
   firstName: string;

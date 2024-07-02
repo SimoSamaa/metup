@@ -1,6 +1,7 @@
 import type { registerPayload, loginPayload, User } from '@/types/userTypes';
 import handleRequest from '@/hooks/handleRequest';
 import useAuthStore from './index';
+import { useRouter } from 'vue-router';
 
 type Token = { token: string; };
 
@@ -55,9 +56,4 @@ export default {
   //     this.userId = null;
   //   }
   // },
-  async logout(this: User) {
-    this.user = {};
-
-    localStorage.removeItem('user');
-  }
 };

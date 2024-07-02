@@ -21,8 +21,9 @@
             bottom="-55px"
           />
         </button>
-        <button class="overflow-hidden">
+        <button @click="toggleAccountMenu()">
           <img
+            class="img-profile-nav rounded-full"
             :src="user.picture"
             alt="user-pic"
           >
@@ -34,20 +35,33 @@
         </button>
       </div>
     </div>
+    <!--  ACCOUNT MENU -->
+    <AccountMenu
+      :user
+      v-model="showAccountMenu"
+    />
     <!-- NAVIGATION BAR (LINKS RESPONSIVE MOBILE) -->
     <NavLinks class="min-[950px]:hidden -z-20" />
   </header>
 </template>
 
 <script lang="ts" setup>
-import { computed } from 'vue';
+import { ref, computed } from 'vue';
 import NavSearch from './includes/NavSearch.vue';
 import NavLinks from './includes/NavLinks.vue';
+import AccountMenu from './includes/AccountMenu.vue';
 import useAuthStore from '@/modules/auth/index';
 import { Bell, MessagesSquare } from 'lucide-vue-next';
 
 const authStore = useAuthStore();
+
 const user = computed(() => authStore.user);
+
+const showAccountMenu = ref(false);
+
+const toggleAccountMenu = () => {
+  showAccountMenu.value = !showAccountMenu.value ? true : false;
+};
 
 </script>
 

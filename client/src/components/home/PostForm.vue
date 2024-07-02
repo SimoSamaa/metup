@@ -12,15 +12,15 @@
       </button>
     </div>
     <div class="post-btn flex mt-4 pt-2 border-t border-third">
-      <button>
+      <button class="hover-w2">
         <Video class="text-red-500" />
         Live Video
       </button>
-      <button>
+      <button class="hover-w2">
         <Images class="text-green-500" />
         Photo/Video
       </button>
-      <button class="">
+      <button class="hover-w2">
         <Laugh class="text-yellow-500" />
         Feeling/Activity
       </button>

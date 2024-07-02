@@ -11,13 +11,23 @@
     <p>
       your account is not verify yet, verify it now before it gets deleted after month from creation.
     </p>
-    <a
-      @click="resendVerificationEmail()"
-      href="#"
-      class="w-max text-blue2 font-semibold flex gap-1 items-center ml-auto relative"
-    >Resend verification email
-      <SendHorizontal :size="20" />
-    </a>
+    <div class="ml-auto max-[650px]:ml-0 w-max">
+      <a
+        v-if="!isLoading"
+        @click="resendVerificationEmail()"
+        href="#"
+        class="text-blue2 font-semibold flex gap-1 items-center  relative"
+      >Resend verification email
+        <SendHorizontal :size="20" />
+      </a>
+      <div
+        v-else
+        class="flex items-center gap-1 text-gray-400"
+      >
+        sending email
+        <span className="loading loading-bars loading-xs"></span>
+      </div>
+    </div>
   </div>
 </template>
 
@@ -35,8 +45,11 @@ const props = defineProps<{
 
 const resendMess = ref('');
 const resendErr = ref(false);
+const isLoading = ref(false);
 
 const resendVerificationEmail = async () => {
+  isLoading.value = true;
+
   try {
     const res = await authStore.resendActivatedLink();
     console.log(res);
@@ -50,15 +63,22 @@ const resendVerificationEmail = async () => {
       resendMess.value = '';
       resendErr.value = false;
     }, 5000);
+    isLoading.value = false;
   }
 };
 </script>
 
 <style scoped lang="scss">
+@import '@/scss/helpers/mixins';
+
 a::before {
   @apply content-[''] absolute left-0 opacity-0 scale-0 -bottom-1 w-full h-[1px] bg-blue2 transition-all ease-out duration-300;
 
   &:hover {
+    @apply bottom-0 opacity-100 scale-100;
+  }
+
+  @include breakpoint('md') {
     @apply bottom-0 opacity-100 scale-100;
   }
 }
