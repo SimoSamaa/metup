@@ -16,7 +16,8 @@
     "pinia": "^2.1.7",
     "three": "^0.165.0",
     "vue": "^3.4.21",
-    "vue-router": "^4.3.2"
+    "vue-router": "^4.3.2",
+    "vue3-emoji-picker": "^1.1.8"
   },
   "devDependencies": {
     "@rushstack/eslint-patch": "^1.8.0",

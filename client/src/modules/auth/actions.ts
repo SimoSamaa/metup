@@ -1,7 +1,6 @@
 import type { registerPayload, loginPayload, User } from '@/types/userTypes';
 import handleRequest from '@/hooks/handleRequest';
 import useAuthStore from './index';
-import { useRouter } from 'vue-router';
 
 type Token = { token: string; };
 

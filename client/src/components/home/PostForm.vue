@@ -1,12 +1,16 @@
 <template>
+  <PostFormPopup :user />
   <main class="p-4 bg-w1 rounded-md max-[650px]:rounded-none mt-4 shadow-md">
     <div class="flex gap-4">
-      <div class="size-[40px] rounded-full overflow-hidden">
+      <router-link
+        to="/profile"
+        class="size-[40px] rounded-full overflow-hidden"
+      >
         <img
           :src="user.picture"
           alt="user-pic"
         >
-      </div>
+      </router-link>
       <button class="flex-1 text-left px-4 rounded-badge bg-w2 max-[365px]:text-sm">
         What's on your mind, {{ props.user.firstName }}?
       </button>
@@ -31,6 +35,7 @@
 <script lang="ts" setup>
 import { Video, Images, Laugh } from 'lucide-vue-next';
 import type { User } from '@/types/userTypes';
+import PostFormPopup from './PostFormPopup.vue';
 
 const props = defineProps<{
   user: User;

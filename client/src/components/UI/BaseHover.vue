@@ -28,9 +28,11 @@ defineProps({
 
 <style lang="scss">
 $classes: (
+  'button',
   'nav ul li a',
   '.user-actions button',
   '.right-side',
+  '.emoji'
 );
 
 #hover-title-element {

@@ -29,7 +29,7 @@
 }
 
 // MEDIA QUERIES
-@mixin breakpoint($size-screen) {
+@mixin breakpoint($size-screen, $custom: null) {
   @if($size-screen =='sm') {
     @media (max-width: 650px) {
       @content;
@@ -44,6 +44,12 @@
 
   @else if ($size-screen =='lg') {
     @media (max-width: 1285px) {
+      @content;
+    }
+  }
+
+  @else {
+    @media (max-width: #{$custom}px) {
       @content;
     }
   }
