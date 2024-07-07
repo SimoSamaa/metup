@@ -1,4 +1,5 @@
 import express, { Request, Response, NextFunction } from "express";
+import fileUpload from 'express-fileupload';
 import mongoose from "mongoose";
 import bodyParser from "body-parser";
 import { readdirSync } from 'fs';
@@ -8,6 +9,7 @@ const app = express();
 const port = (process.env.PORT || 3000).toString();
 
 app.use(bodyParser.json());
+app.use(fileUpload({ useTempFiles: true }));
 
 app.use((_, res: Response, next: NextFunction) => {
   res.setHeader('Access-Control-Allow-Origin', '*');

@@ -10,5 +10,8 @@ namespace NodeJS {
     MAILING_SECRET: string;
     MAILING_REFRESH: string;
     MAILING_ACCESS: string;
+    CLOUD_NAME: string;
+    CLOUD_API_KEY: string;
+    CLOUD_API_SECRET: string;
   }
 }
