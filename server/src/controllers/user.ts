@@ -119,7 +119,7 @@ export const login = async (req: Request, res: Response, next: NextFunction) => 
     const token = generateToken({ id }, '1h');
 
     // SEND RESPONSE DATA
-    res.status(201).json({
+    res.status(200).json({
       id,
       token,
       username: user!.username,
