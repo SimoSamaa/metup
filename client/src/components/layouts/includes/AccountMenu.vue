@@ -10,7 +10,7 @@
       >
         <button
           @click="emit('update:modelValue', false)"
-          class="hover-w2 absolute grid place-content-center size-[36px] rounded-full bg-third"
+          class="hover-w2 !absolute grid place-content-center size-[36px] rounded-full bg-third"
         >
           <ArrowLeft :size="20" />
         </button>
@@ -66,7 +66,7 @@ const logout = () => {
   localStorage.removeItem('user');
   authStore.$state.user.token = null;
   router.push({ name: 'auth' });
-  authStore.$reset();
+  // authStore.$reset();
 };
 
 const handleScrollBarAccountMenu = () => {

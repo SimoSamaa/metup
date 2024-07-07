@@ -1,5 +1,8 @@
 <template>
-  <PostFormPopup :user />
+  <PostFormPopup
+    :user="props.user"
+    v-model="openPopup"
+  />
   <main class="p-4 bg-w1 rounded-md max-[650px]:rounded-none mt-4 shadow-md">
     <div class="flex gap-4">
       <router-link
@@ -11,7 +14,10 @@
           alt="user-pic"
         >
       </router-link>
-      <button class="flex-1 text-left px-4 rounded-badge bg-w2 max-[365px]:text-sm">
+      <button
+        @click="openPopup = true"
+        class="flex-1 text-left px-4 rounded-badge bg-w2 max-[365px]:text-sm"
+      >
         What's on your mind, {{ props.user.firstName }}?
       </button>
     </div>
@@ -33,13 +39,16 @@
 </template>
 
 <script lang="ts" setup>
+import { ref, defineAsyncComponent } from 'vue';
 import { Video, Images, Laugh } from 'lucide-vue-next';
 import type { User } from '@/types/userTypes';
-import PostFormPopup from './PostFormPopup.vue';
+const PostFormPopup = defineAsyncComponent({ loader: () => import('./PostFormPopup.vue') });
 
 const props = defineProps<{
   user: User;
 }>();
+
+const openPopup = ref(false);
 </script>
 
 <style lang="scss" scoped>
