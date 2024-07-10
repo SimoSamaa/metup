@@ -134,7 +134,7 @@
       <base-button
         color="bg-green-500"
         :loading="isLoading"
-      >Log in</base-button>
+      >Sign up</base-button>
       <p
         v-if="serverMess"
         class="text-red-500 font-semibold mt-2"

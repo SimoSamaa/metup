@@ -42,7 +42,7 @@
 import { ref, defineAsyncComponent } from 'vue';
 import { Video, Images, Laugh } from 'lucide-vue-next';
 import type { User } from '@/types/userTypes';
-const PostFormPopup = defineAsyncComponent({ loader: () => import('./PostFormPopup.vue') });
+const PostFormPopup = defineAsyncComponent({ loader: () => import('./createPost/PostFormPopup.vue') });
 
 const props = defineProps<{
   user: User;

@@ -3,7 +3,7 @@
     <div class="flex items-center justify-between h-[56px]">
       <!-- NAVIGATION BAR (SEARCH) -->
       <NavSearch />
-      <!-- NAVIGATION BAT (LINKS) -->
+      <!-- NAVIGATION BArR (LINKS) -->
       <NavLinks class="max-[950px]:hidden" />
       <!-- NAVIGATION BAR (ACTIONS) -->
       <div class="user-actions flex gap-4">
