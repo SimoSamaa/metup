@@ -6,16 +6,15 @@
 </template>
 
 <script lang="ts" setup>
-import { ref, onMounted, computed } from 'vue';
+import { ref, onMounted } from 'vue';
 import * as THREE from 'three';
 import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
 import { FBXLoader } from 'three/addons/loaders/FBXLoader.js';
+import useHelpers from '@/hooks/helpers';
+
+const { usePath } = useHelpers();
 
 const logo3D = ref<null | HTMLCanvasElement>(null);
-
-const path = computed<Function>(() => {
-  return (path: string) => new URL(path, import.meta.url).href;
-});
 
 onMounted(() => {
   const scene = new THREE.Scene();
@@ -32,7 +31,7 @@ onMounted(() => {
   scene.add(pointLight);
 
   const fbxLoader = new FBXLoader();
-  fbxLoader.load(path.value('../../assets/logo-3D.fbx'), (mesh: any) => {
+  fbxLoader.load(usePath.value('./assets/logo-3D.fbx'), (mesh: any) => {
     mesh.children[0].material = new THREE.MeshStandardMaterial({ color: '#ffffff' });
     mesh.children[1].material = new THREE.MeshStandardMaterial({ color: '#1877F2' });
     scene.add(mesh);

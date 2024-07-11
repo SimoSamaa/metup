@@ -1,7 +1,8 @@
 <template>
   <PostFormPopup
+    :openPopupUpload
     :user="props.user"
-    v-model="openPopup"
+    v-model:openPopup="openPopup"
   />
   <main class="p-4 bg-w1 rounded-md max-[650px]:rounded-none mt-4 shadow-md">
     <div class="flex gap-4">
@@ -15,7 +16,7 @@
         >
       </router-link>
       <button
-        @click="openPopup = true"
+        @click="openPopup = true, openPopupUpload = false"
         class="flex-1 text-left px-4 rounded-badge bg-w2 max-[365px]:text-sm"
       >
         What's on your mind, {{ props.user.firstName }}?
@@ -26,7 +27,10 @@
         <Video class="text-red-500" />
         Live Video
       </button>
-      <button class="hover-w2">
+      <button
+        @click="openPopup = true; openPopupUpload = true;"
+        class="hover-w2"
+      >
         <Images class="text-green-500" />
         Photo/Video
       </button>
@@ -49,6 +53,7 @@ const props = defineProps<{
 }>();
 
 const openPopup = ref(false);
+const openPopupUpload = ref(false);
 </script>
 
 <style lang="scss" scoped>
