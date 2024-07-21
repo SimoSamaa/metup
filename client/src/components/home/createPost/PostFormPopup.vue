@@ -138,8 +138,9 @@
           />
           <base-button
             color="bg-blue2"
-            :disabled="images.length === 0 && !postData || isLoading"
+            :disabled="images.length === 0 && !postData || isLoading || !!postErr"
             :loading="isLoading"
+            ref="submitBtn"
           >Post</base-button>
         </div>
       </form>
@@ -262,12 +263,7 @@ const growHeight = (e: Event) => {
   }
 };
 
-const handleScrollBarPopupForm = () => {
-  nextTick(() => {
-    document.body.style.overflow = props.openPopup ? 'hidden' : 'auto';
-  });
-};
-
+let intervalId: number | undefined;
 const submitPost = async () => {
   const postStore = usePostStore();
 
@@ -298,9 +294,10 @@ const submitPost = async () => {
     images.value = [];
     bgPost.value = '';
   } catch (err) {
-    console.log(err);
+    console.error(err);
     postErr.value = (err as Error).message;
-    setTimeout(() => postErr.value = '', 5000);
+    clearTimeout(intervalId);
+    intervalId = setTimeout(() => postErr.value = '', 5000);
   } finally {
     isLoading.value = false;
   }
@@ -310,6 +307,12 @@ const vFocus = {
   mounted: (el: HTMLElement) => {
     el.focus();
   }
+};
+
+const handleScrollBarPopupForm = () => {
+  nextTick(() => {
+    document.body.style.overflow = props.openPopup ? 'hidden' : 'auto';
+  });
 };
 
 onUpdated(() => {
