@@ -4,7 +4,7 @@ interface IPost extends Document {
   type: string;
   text: string;
   images: string[];
-  background: string;
+  bgPost: string;
   comments: {
     comment: string;
     image: string;

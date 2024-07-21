@@ -70,10 +70,13 @@
 </template>
 
 <script lang="ts" setup>
-import { ref, computed } from 'vue';
+import { ref, computed, watch } from 'vue';
 import { X, MonitorUp, Pencil, CopyPlus } from 'lucide-vue-next';
 
 const emit = defineEmits(['update:updateState', 'update:updateImages']);
+const props = defineProps<{
+  openPopup: boolean;
+}>();
 
 const images = ref<string[]>([]);
 const imgGreaterThan4 = ref<string[]>([]);
@@ -111,7 +114,7 @@ const browserFile = (e: Event) => {
 
   const fileInput = document.createElement('input');
   fileInput.type = 'file';
-  fileInput.accept = 'image/*, video/*';
+  fileInput.accept = 'image/jpg, image/jpeg, image/png, image/gif, image/webp video/mp4';
   fileInput.multiple = true;
   fileInput.click();
 
@@ -133,6 +136,10 @@ const resetUploadArea = () => {
   imgGreaterThan4.value = [];
   emit('update:updateImages', []);
 };
+
+watch(() => props.openPopup, (newVal) => {
+  if (!newVal) resetUploadArea();
+});
 </script>
 
 <style scoped lang="scss">

@@ -10,7 +10,7 @@ const postSchema = new Schema<IPost>({
   },
   text: String,
   images: Array,
-  background: String,
+  bgPost: String,
   comments: [
     {
       comment: String,

@@ -6,7 +6,7 @@ import { uploadImages } from '../middleware/uploadFiles';
 
 const router = Router();
 
-router.post('/upload-images', uploadImages, uploadController.uploadImages);
+router.post('/upload-images', isAuth, uploadImages, uploadController.uploadImages);
 
 export default router;
 

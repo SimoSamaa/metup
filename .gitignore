@@ -23,6 +23,7 @@ server/node_modules
 server/dist
 server/.env
 server/.nyc_output
+server/tmp
 
 # main dir
 /node_modules

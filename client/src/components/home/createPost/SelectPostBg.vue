@@ -1,6 +1,9 @@
 <template>
   <div class="select-bg flex-1 flex gap-2 justify-between mr-2">
-    <button @click="$emit('update:modelValue', false)">
+    <button
+      type="button"
+      @click="$emit('update:modelValue', false)"
+    >
       <ChevronLeft />
     </button>
     <ul class="flex gap-[inherit] max-[500px]:[&_li:nth-last-child(-n+2)]:hidden">

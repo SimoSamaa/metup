@@ -8,11 +8,18 @@ const handleRequest = async <T, P = object>(
 
   const fetchOptions: RequestInit = {
     method: method,
-    headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${token}` },
+    headers: { 'Authorization': `Bearer ${token}` },
   };
 
   if (payload !== null && method !== 'GET') {
-    fetchOptions.body = JSON.stringify(payload);
+    if (payload instanceof FormData) {
+      fetchOptions.body = payload;
+    } else {
+      fetchOptions.body = JSON.stringify(payload);
+      (fetchOptions.headers as Record<string, string>)['Content-Type'] = 'application/json';
+    }
+  } else if (payload !== null) {
+    fetchOptions.body = payload as BodyInit;
   }
 
   const req = await fetch(`${import.meta.env.VITE_SERVER_URL}/${path}`, fetchOptions);

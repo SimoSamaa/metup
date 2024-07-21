@@ -1,4 +1,10 @@
 <template>
+  <base-alert
+    :show="openPopup && !!postErr"
+    :message="postErr"
+    type="alert-error"
+    custom="!top-4"
+  ></base-alert>
   <transition name="backdrop">
     <div
       @click="emit('update:openPopup', false);"
@@ -37,21 +43,22 @@
         <div class="relative">
           <label
             v-if="bgPost"
-            class="h-[347px] grid place-items-center"
+            class=" aspect-[16/11.1] grid place-items-center"
             :style="backgroundStyle"
           >
             <textarea
               ref="textarea"
               v-focus
-              class="text-center bg-transparent resize-none w-full outline-none placeholder:text-[#ffffff94] text-white px-4 pb-4 text-2xl font-bold"
+              class="text-center bg-transparent resize-none w-full outline-none placeholder:text-[#ffffff94] text-[] text-white px-4 pb-4 font-bold"
               :placeholder="`What's on your mind, ${props.user.firstName}?`"
               v-model="postData"
               @input="growHeight($event)"
+              style="font-size: clamp(20px, 5vw, 24px);"
             ></textarea>
           </label>
           <textarea
-            v-else
             v-focus
+            v-else
             :placeholder="`What's on your mind, ${props.user.firstName}?`"
             :class="['resize-none w-full outline-none placeholder:text-inherit px-4 pb-4', postData.length >= 106 ? 'text-[15px]' : 'text-xl']"
             @input="growHeight($event)"
@@ -126,11 +133,13 @@
           <UploadPostMedia
             v-model:updateState="uploadSection"
             v-model:updateImages="images"
+            :openPopup
             v-else
           />
           <base-button
             color="bg-blue2"
-            :disabled="images.length === 0 && !postData"
+            :disabled="images.length === 0 && !postData || isLoading"
+            :loading="isLoading"
           >Post</base-button>
         </div>
       </form>
@@ -143,12 +152,15 @@
 </template>
 
 <script lang="ts" setup>
+import 'vue3-emoji-picker/css';
 import { ref, computed, nextTick, onUpdated, defineAsyncComponent, watch } from 'vue';
 import { X, Smile, Palette, Images } from 'lucide-vue-next';
 import type { User } from '@/types/userTypes';
 import EmojiPicker from 'vue3-emoji-picker';
-import 'vue3-emoji-picker/css';
 import useHelpers from '@/hooks/helpers';
+import usePostStore from '@/modules/post/index';
+import dataURItoBlob from '@/hooks/dataURLtoBlob';
+
 const SelectPostBg = defineAsyncComponent({ loader: () => import('./SelectPostBg.vue') });
 const UploadPostMedia = defineAsyncComponent({ loader: () => import('./UploadPostMedia.vue') });
 const ChooseBgImg = defineAsyncComponent({ loader: () => import('./ChooseBgImg.vue') });
@@ -171,6 +183,8 @@ const textarea = ref<HTMLTextAreaElement | null>(null);
 const chooseBg = ref(false);
 const bgPost = ref('');
 const openChooseBg = ref(false);
+const isLoading = ref(false);
+const postErr = ref('');
 
 watch(() => props.openPopup, (_, oldVal) => {
   if (oldVal === false && props.openPopupUpload === true) {
@@ -248,33 +262,62 @@ const growHeight = (e: Event) => {
   }
 };
 
-const vFocus = {
-  mounted: (el: HTMLElement) => {
-    el.focus();
-  }
-};
-
 const handleScrollBarPopupForm = () => {
   nextTick(() => {
     document.body.style.overflow = props.openPopup ? 'hidden' : 'auto';
   });
 };
 
-const submitPost = () => {
-  if (!postData.value && images.value.length === 0) return;
+const submitPost = async () => {
+  const postStore = usePostStore();
+
+  // CONVERT IMAGES BASE64 TO BLOB
+  const blobImages = images.value.map((img) => dataURItoBlob(img));
+  const path = `${props.user.username}/postsImages`;
 
   try {
-    console.log({
-      post: postData.value,
-      images: images.value
-    });
+    isLoading.value = true;
 
+    if (images.value && images.value.length > 0) {
+      await postStore.uploadImages({ path, blobImages });
+    }
+
+    if (postData.value !== '') {
+      await postStore.createPost({
+        text: postData.value,
+        bgPost: bgPost.value || null,
+        images: postStore.getImages,
+      });
+      postStore.$reset();
+    }
+
+    emit('update:openPopup', false);
+    uploadSection.value = false;
+    emojiPicker.value = false;
+    postData.value = '';
+    images.value = [];
+    bgPost.value = '';
   } catch (err) {
-    //  
+    console.log(err);
+    postErr.value = (err as Error).message;
+    setTimeout(() => postErr.value = '', 5000);
+  } finally {
+    isLoading.value = false;
   }
 };
 
-onUpdated(() => handleScrollBarPopupForm());
+const vFocus = {
+  mounted: (el: HTMLElement) => {
+    el.focus();
+  }
+};
+
+onUpdated(() => {
+  handleScrollBarPopupForm();
+  window.onbeforeunload = () => {
+    sessionStorage.removeItem('bgPost');
+  };
+});
 </script>
 
 <style scoped lang="scss">
@@ -317,5 +360,5 @@ onUpdated(() => handleScrollBarPopupForm());
 }
 
 @include setAnimation('backdrop', null, null, 'opacity');
-@include setAnimation('translate-popup', (translate: 0 100px), (translate: 0), null);
+@include setAnimation('translate-popup', (translate: 0 -100px), (translate: 0), null);
 </style>

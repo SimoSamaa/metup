@@ -14,14 +14,14 @@ export const uploadImages = async (req: Request, res: Response, next: NextFuncti
   try {
     const { path } = req.body;
     const files = Object.values(req.files ?? {}).flat();
-    const image = [];
+    const images = [];
 
     for (const file of files) {
       const url = await uploadToCloudinary(file, path);
-      image.push(url);
+      images.push(url);
       removeTemp(file.tempFilePath);
     }
-    res.status(200).json(image);
+    res.status(200).json({ images });
   } catch (err) {
     HandledError.serverFail(err, next);
     return err;
