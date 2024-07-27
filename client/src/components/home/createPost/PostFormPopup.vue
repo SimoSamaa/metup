@@ -278,13 +278,13 @@ const submitPost = async () => {
       await postStore.uploadImages({ path, blobImages });
     }
 
-    if (postData.value !== '') {
+    if (postData.value !== '' || images.value.length > 0) {
       await postStore.createPost({
         text: postData.value,
         bgPost: bgPost.value || null,
         images: postStore.getImages,
       });
-      postStore.$reset();
+      postStore.images = [];
     }
 
     emit('update:openPopup', false);

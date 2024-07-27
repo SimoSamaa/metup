@@ -13,6 +13,7 @@
   },
   "dependencies": {
     "lucide-vue-next": "^0.395.0",
+    "moment": "^2.30.1",
     "pinia": "^2.1.7",
     "three": "^0.165.0",
     "vue": "^3.4.21",

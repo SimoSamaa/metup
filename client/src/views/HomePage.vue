@@ -1,6 +1,5 @@
 <template>
   <main class="flex">
-    <RouterView />
     <!-- LEFT SIDE -->
     <section class="home-sides max-lg:hidden">
       <ul>
@@ -63,6 +62,8 @@
         <ResendVerification :user="user" />
         <!-- POST FORM -->
         <PostForm :user="user" />
+        <!-- POSTS SECTION -->
+        <PostsSection />
       </div>
     </section>
     <!-- RIGHT SIDE -->
@@ -111,8 +112,10 @@ import MetupStories from '@/components/home/MetupStories.vue';
 import PostForm from '@/components/home/PostForm.vue';
 import ResendVerification from '@/components/home/ResendVerification.vue';
 import useAuthStore from '@/modules/auth/index';
+import PostsSection from '@/components/home/posts/PostsSection.vue';
 
 const authStore = useAuthStore();
+
 const user = computed(() => authStore.user);
 const fullName = computed(() => `${user.value?.firstName} ${user.value?.lastName}`);
 </script>

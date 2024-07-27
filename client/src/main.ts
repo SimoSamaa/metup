@@ -20,4 +20,5 @@ app.component('BaseHover', BaseHover);
 app.use(store);
 app.use(router);
 
+
 app.mount('#app');

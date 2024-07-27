@@ -1,7 +1,7 @@
-import type { Post } from '@/types/postTypes';
+import type { Posts } from '@/types/postTypes';
 
 export default {
-  getPosts(state: { posts: Post[]; }) {
+  getPosts(state: { posts: Posts[]; }) {
     return state.posts;
   },
   getImages(state: { images: Array<string>; }) {

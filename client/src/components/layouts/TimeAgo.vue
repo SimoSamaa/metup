@@ -18,8 +18,10 @@ const relativeTime = computed(() => {
   switch (timeAgo) {
     case 'a few seconds':
       return 'just now';
+
     case 'a minute':
       return '1 minute';
+
     default:
       return timeAgo;
   }

@@ -32,7 +32,10 @@ $classes: (
   'nav ul li a',
   '.user-actions button',
   '.right-side',
-  '.emoji'
+  '.emoji',
+  '.time-ago',
+  '.post-showing',
+  '.verified-badge',
 );
 
 #hover-title-element {

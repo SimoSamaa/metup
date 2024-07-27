@@ -1,16 +1,18 @@
 import handleRequest from '@/hooks/handleRequest';
-import type { Post } from '@/types/postTypes';
+import type { Post, Posts } from '@/types/postTypes';
 import useAuthStore from '@/modules/auth/index';
 
 export default {
-  async createPost(this: { posts: Post[]; }, post: Post) {
+  async createPost(this: { posts: Posts[]; }, post: Post) {
     const authStore = useAuthStore();
     const token = authStore.token;
     const user = authStore.userId;
 
     const res = await handleRequest<{ message: string; }, Post>('add-post', 'POST', { user, ...post }, token);
+    console.log('from action', res);
 
-    this.posts.push(post);
+
+    this.posts.unshift((res as unknown as Posts));
 
     return res.message;
   },
@@ -27,5 +29,14 @@ export default {
     this.images = res.images;
 
     return res.message;
+  },
+  async fetchPosts(this: { posts: Posts[]; }) {
+    const authStore = useAuthStore();
+    const token = authStore.token;
+
+    const res = await handleRequest<Posts[], null>('getAllPosts', 'GET', null, token);
+    console.log(res);
+
+    this.posts = res;
   }
 };

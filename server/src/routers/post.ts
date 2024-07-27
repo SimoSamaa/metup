@@ -11,8 +11,10 @@ router.post('/add-post', isAuth, [
     .withMessage('text post required')
     .isString()
     .isLength({ min: 5 })
-    .withMessage('text post must be at least 8 characters'),
+    .withMessage('text post must be at least 5 characters'),
 ], postController.createPost);
+
+router.get('/getAllPosts', postController.getAllPosts);
 
 export default router;
 

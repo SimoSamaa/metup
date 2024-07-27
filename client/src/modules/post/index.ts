@@ -1,11 +1,11 @@
 import { defineStore } from 'pinia';
 import postActions from './actions';
 import postGetters from './getters';
-import type { Post } from '@/types/postTypes';
+import type { Post, Posts } from '@/types/postTypes';
 
 const usePostStore = defineStore('post', {
   state: () => ({
-    posts: [] as Post[],
+    posts: [] as Posts[],
     images: [] as Array<string>,
   }),
   actions: postActions,
