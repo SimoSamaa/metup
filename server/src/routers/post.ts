@@ -14,7 +14,7 @@ router.post('/add-post', isAuth, [
     .withMessage('text post must be at least 5 characters'),
 ], postController.createPost);
 
-router.get('/getAllPosts', postController.getAllPosts);
+router.get('/getAllPosts', isAuth, postController.getAllPosts);
 
 export default router;
 

@@ -1,5 +1,7 @@
 <template>
   <main class="flex">
+    <!-- ACTIVATE ACCOUNT COMPONENT -->
+    <RouterView />
     <!-- LEFT SIDE -->
     <section class="home-sides max-lg:hidden">
       <ul>
@@ -63,7 +65,7 @@
         <!-- POST FORM -->
         <PostForm :user="user" />
         <!-- POSTS SECTION -->
-        <PostsSection />
+        <PostsSection :verified="user.verified" />
       </div>
     </section>
     <!-- RIGHT SIDE -->
