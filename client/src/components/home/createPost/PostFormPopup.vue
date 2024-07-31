@@ -154,7 +154,7 @@
 
 <script lang="ts" setup>
 import 'vue3-emoji-picker/css';
-import { ref, computed, nextTick, onUpdated, defineAsyncComponent, watch } from 'vue';
+import { ref, toRef, computed, nextTick, onUpdated, defineAsyncComponent, watch } from 'vue';
 import { X, Smile, Palette, Images } from 'lucide-vue-next';
 import type { User } from '@/types/userTypes';
 import EmojiPicker from 'vue3-emoji-picker';
@@ -166,7 +166,7 @@ const SelectPostBg = defineAsyncComponent({ loader: () => import('./SelectPostBg
 const UploadPostMedia = defineAsyncComponent({ loader: () => import('./UploadPostMedia.vue') });
 const ChooseBgImg = defineAsyncComponent({ loader: () => import('./ChooseBgImg.vue') });
 
-const { usePath } = useHelpers();
+const { usePath, useHideScroll } = useHelpers();
 
 const emit = defineEmits(['update:openPopup']);
 
@@ -309,14 +309,9 @@ const vFocus = {
   }
 };
 
-const handleScrollBarPopupForm = () => {
-  nextTick(() => {
-    document.body.style.overflow = props.openPopup ? 'hidden' : 'auto';
-  });
-};
+useHideScroll(toRef(props, 'openPopup'));
 
 onUpdated(() => {
-  handleScrollBarPopupForm();
   window.onbeforeunload = () => {
     sessionStorage.removeItem('bgPost');
   };

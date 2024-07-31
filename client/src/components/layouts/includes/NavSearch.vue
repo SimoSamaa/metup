@@ -1,11 +1,19 @@
 <template>
+  <transition name="loading-posts">
+    <div
+      v-if="isLoading"
+      class="bg-third z-10 fixed left-1/2 -translate-x-1/2 top-20 max-[950px]:top-[140px] rounded-full size-14 grid place-content-center shadow-md"
+    >
+      <span class="loading loading-spinner loading-lg bg-blue2"></span>
+    </div>
+  </transition>
   <div
     :class="['navigation-search py-2 flex gap-2 relative w-[calc(300px+0.5rem)]', { 'search-container-sm': focusSearch }]"
   >
     <button
       class="not-allowed"
       v-if="Boolean(!focusSearch)"
-      @click="$router.push({ name: 'home' })"
+      @click="loadRedirect()"
     >
       <img
         class="max-w-10"
@@ -68,6 +76,7 @@ import { Search, X, ArrowLeft, History } from 'lucide-vue-next';
 
 const focusSearch = ref(false);
 const inputSearch = ref('');
+const isLoading = ref(false);
 
 const matchesSearchElement = (e: Event) => {
   const elementTarget = (e.target as HTMLElement);
@@ -82,6 +91,38 @@ const matchesSearchElement = (e: Event) => {
     focusSearch.value = false;
     inputSearch.value = '';
   }
+};
+
+import { useRouter } from 'vue-router';
+import postAuthStore from '@/modules/post/index';
+
+const router = useRouter();
+const postStore = postAuthStore();
+
+const loadRedirect = async () => {
+  isLoading.value = true;
+  router.push({ name: 'home' });
+
+  if (!postStore.loading) {
+    await postStore.fetchPosts();
+    postStore.loading = true;
+  }
+
+  let progress = 0;
+  let intervalId: null | number = null;
+  const targetValue = 100;
+  const duration = 1500;
+  const intervalTime = duration / targetValue;
+
+  intervalId = setInterval(() => {
+    progress++;
+
+    if (progress === targetValue) {
+      clearInterval(intervalId as number);
+      postStore.loading = false;
+      isLoading.value = false;
+    }
+  }, intervalTime);
 };
 
 onMounted(() => {
@@ -119,4 +160,6 @@ onMounted(() => {
     }
   }
 }
+
+@include setAnimation('loading-posts', (translate: 0 -200px), (translate: 0), null);
 </style>

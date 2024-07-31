@@ -30,13 +30,16 @@ export default {
 
     return res.message;
   },
-  async fetchPosts(this: { posts: Posts[]; }) {
+  async fetchPosts(this: { posts: Posts[]; loading: boolean; }) {
     const authStore = useAuthStore();
     const token = authStore.token;
 
-    const res = await handleRequest<Posts[], null>('getAllPosts', 'GET', null, token);
-    console.log(res);
+    this.loading = true;
 
+    const res = await handleRequest<Posts[], null>('getAllPosts', 'GET', null, token);
     this.posts = res;
+
+    this.loading = false;
+
   }
 };

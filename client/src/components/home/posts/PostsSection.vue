@@ -4,7 +4,10 @@
     :message="postsErr"
     type="alert-error"
   ></base-alert>
-  <ul class="mt-4 grid gap-4 pb-4">
+  <ul
+    v-if="!checkIfIsPosts && !isLoading"
+    class="mt-4 grid gap-4 pb-4"
+  >
     <li
       v-for="post in posts"
       :key="post._id"
@@ -84,16 +87,27 @@
           <p v-html="formatPostContent(post.text)"></p>
         </div>
       </div>
+      <!--  -->
+      <PostImages :images="(post.images as Array<{ url: string; }>)" />
     </li>
   </ul>
+  <h3 v-else-if="isLoading">loading ...</h3>
+  <h3
+    v-else
+    class="mt-10 text-center flex items-center justify-center gap-2"
+  >No Posts for now
+    <LayoutList />
+  </h3>
 </template>
 
 <script setup lang="ts">
-import { ref, computed, onMounted } from 'vue';
+import { ref, computed, onMounted, watch } from 'vue';
+import { LayoutList } from 'lucide-vue-next';
 import postAuthStore from '@/modules/post/index';
 import useHelpers from '@/hooks/helpers';
+import PostImages from './PostImages.vue.vue';
 import TimeAgo from '../../layouts/TimeAgo.vue';
-import type { Posts } from '../../../types/postTypes';
+import type { Posts } from '@/types/postTypes';
 import { Globe, Dot, BadgeCheck, BadgeX, X, Ellipsis } from 'lucide-vue-next';
 
 const { usePath } = useHelpers();
@@ -104,11 +118,12 @@ const props = defineProps<{
 
 const postStore = postAuthStore();
 
-const postsErr = ref('');
-
 const posts = computed(() => postStore.getPosts);
+const checkIfIsPosts = computed(() => postStore.checkIfIsPosts);
 
 const expandedPosts = ref<string[]>([]);
+const postsErr = ref('');
+const isLoading = ref(false);
 
 // SLICING POST TEXT
 const postTextSlice = computed(() => {
@@ -162,16 +177,24 @@ const deletePostClient = (id: string) => {
 
 const loadPosts = async () => {
   try {
+    isLoading.value = true;
     await postStore.fetchPosts();
+
   } catch (err) {
     console.error(err);
     postsErr.value = (err as Error).message;
     setTimeout(() => postsErr.value = '', 5000);
+  } finally {
+    isLoading.value = false;
   }
 };
 
 onMounted(() => {
   loadPosts();
+});
+
+watch(() => postStore.loading, (newVal) => {
+  isLoading.value = newVal ? true : false;
 });
 </script>
 

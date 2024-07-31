@@ -3,7 +3,7 @@ import type { StateTree } from 'pinia';
 interface Post extends StateTree {
   text: string;
   bgPost: string | null;
-  images?: Array<string> | [];
+  images: Array<{ url: string; }> | string[] | [];
 }
 
 type UserInfo = {

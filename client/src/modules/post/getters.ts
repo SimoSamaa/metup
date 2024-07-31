@@ -7,4 +7,7 @@ export default {
   getImages(state: { images: Array<string>; }) {
     return state.images;
   },
+  checkIfIsPosts(state: { posts: Posts[]; }) {
+    return state.posts && state.posts.length === 0;
+  }
 };

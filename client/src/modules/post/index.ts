@@ -7,6 +7,7 @@ const usePostStore = defineStore('post', {
   state: () => ({
     posts: [] as Posts[],
     images: [] as Array<string>,
+    loading: false,
   }),
   actions: postActions,
   getters: postGetters,
