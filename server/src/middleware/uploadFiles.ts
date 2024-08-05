@@ -27,7 +27,7 @@ const uploadImages = (req: Request, _: Response, next: NextFunction) => {
         throw error;
       }
 
-      if (file.size > 1024 * 1024 * 1) {
+      if (file.size > 1024 * 1024 * 5) {
         const error = new HandledError('file too large', 400);
         throw error;
       }

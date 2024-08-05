@@ -36,6 +36,7 @@ $classes: (
   '.time-ago',
   '.post-showing',
   '.verified-badge',
+  'baseHover-group',
 );
 
 #hover-title-element {

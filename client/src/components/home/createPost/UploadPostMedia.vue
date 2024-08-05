@@ -15,7 +15,10 @@
         <X :size="20" />
       </base-button>
       <div class="absolute left-4 top-4 flex gap-2 opacity-0 duration-300 transition-opacity group-hover:opacity-100">
-        <button class="upload-actions hover-w2">
+        <button
+          type="button"
+          class="upload-actions hover-w2"
+        >
           <Pencil :size='19' />
           <p class="max-[650px]:hidden">Edit All</p>
         </button>

@@ -62,6 +62,10 @@
 
   .#{$name}-leave-active {
     animation: #{$name} 300ms ease reverse;
+
+    @if($name =='zaba') {
+      position: absolute;
+    }
   }
 
   .#{$name}-move {
