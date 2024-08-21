@@ -11,7 +11,7 @@ export default {
         "w2": 'var(--clr-bg-secondary)',
         "blue2": 'var(--clr-blue2)',
         "third": 'var(--clr-bg-third)',
-      }
+      },
     },
   },
   plugins: [

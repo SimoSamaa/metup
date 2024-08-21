@@ -49,4 +49,8 @@
   a {
     @apply block;
   }
+
+  button {
+    @apply pointer-events-auto disabled:contrast-50 disabled:cursor-not-allowed;
+  }
 }
